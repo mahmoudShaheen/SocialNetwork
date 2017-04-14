@@ -1,0 +1,23 @@
+1. Code style:
+	db: all tables & rows are lower-case
+	PHP: vars. & functions lower case with underscores
+	ex: this_is_a_function or this_is_a_variable
+	PS: code must be modular
+
+2. CRUD & SQL:
+	must use prepaired statements
+	for any data from user to avoid SQL Injection
+
+3. Password:
+	username, password are always root, root
+	PS: db name will be cse
+
+4. tutorial will be posted soon for XAMPP installation and config.
+
+5. code must be uploaded constantly to Github
+so all members be able to see work progress.
+Git Repo. for back-end will be: https://github.com/mahmoudShaheen/SocialNetwork
+
+6. tutorial will be posted soon for working with git repo.
+
+7. for any question please don't hesitate to send me or team leaders a message

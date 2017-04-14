@@ -1,0 +1,35 @@
+Basic Team
+	url encode
+	html encode
+	form validation
+	password hash
+	login validation
+	regulating page access
+		admin area
+		users area
+	db connection
+	html header/footer
+	redirection
+	page subject
+	?q= conversion to /url
+	API
+	form submission
+
+SQL
+	ER diagram
+	db & tables creation
+	db optimization
+	indexes
+	triggers
+	procedures
+
+CRUD
+	Get ER from SQL team
+	populating pages with data from db
+	inserting forms' data to db
+
+Real-time connection
+	real time two-way connection for:
+		live search
+		Notification
+		Messages

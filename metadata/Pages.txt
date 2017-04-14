@@ -1,0 +1,27 @@
+Pages:
+		Login screen
+		edit profile/settings
+		profiles (view)
+		feed (view, post, comment)
+		post page (view, comment)
+		Notifications (view)
+		Messages (view, send)
+		course:
+				add/edit
+				view
+		projects:
+				add/edit
+				view
+		labs:
+				add/edit
+				view
+		component:
+				add/edit
+				view
+				borrow form
+
+		Site Administrator: (Prof privileges  + extra)
+				add accounts/Administrators
+				Block & change password
+				delete posts
+				change user's college role
