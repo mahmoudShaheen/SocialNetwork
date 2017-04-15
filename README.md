@@ -6,7 +6,7 @@ Social Network for CSE-ZU
 Directories:
 =====================================================
 
-[stylesheets](SocialNetwork/stylesheets): Front-end Team
+[stylesheets](stylesheets): Front-end Team
 
 Directory for putting CSS assets in.
 
