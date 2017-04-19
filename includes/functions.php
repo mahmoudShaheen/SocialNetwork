@@ -1,4 +1,7 @@
 <?php
+
+	//file for basic functions
+	
 	//encodes string for html
 	 function html_encode($string){
 		return htmlspecialchars($string);
