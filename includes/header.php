@@ -6,5 +6,6 @@
 	<body>
 		<div id="header">
 			<h1>CSE-ZU Social Network</h1>
+			<a href="logout.php">Log out</a>
 		</div>
 		<div id="main">
