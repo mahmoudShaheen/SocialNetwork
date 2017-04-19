@@ -31,6 +31,11 @@
 		redirect_to("login.php");
 	}
 	
+	//redirects user to login page
+	function log_out_redirect(){
+		redirect_to("login.php?logout=1");
+	}
+	
 	//function to log out user
 	function log_out(){
 		//Unset all the session variables
@@ -41,7 +46,7 @@
 		}
 		//Destroy the session
 		session_destroy();
-		login_redirect();
+		log_out_redirect();
 	}
 	
 ?>
