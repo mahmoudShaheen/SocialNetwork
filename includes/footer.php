@@ -5,7 +5,9 @@
 </html>
 
 <?php
-	//Close database connection
+	//Close database connection if any
 	global $connection;
-	mysqli_close($connection);
+	if ($connection){
+		mysqli_close($connection);
+	}
 ?>

@@ -6,6 +6,13 @@
 	<body>
 		<div id="header">
 			<h1>CSE-ZU Social Network</h1>
-			<a href="logout.php">Log out</a>
+			<?php
+				//show log out link if user logged in
+				require_once("../includes/session.php"); 
+				if (logged_in_as()){
+					echo "<a href=\"logout.php\">Log out</a>";
+				}
+			
+			?>
 		</div>
 		<div id="main">
