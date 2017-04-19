@@ -7,7 +7,7 @@
 <?php
 	//Close database connection if any
 	global $connection;
-	if ($connection){
+	if($connection) {
 		mysqli_close($connection);
 	}
 ?>
