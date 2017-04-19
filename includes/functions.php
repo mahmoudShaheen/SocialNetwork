@@ -24,7 +24,8 @@
 	
 	//prepares queries before sending it to database
 	function mysql_prep( $value ) {
-		return mysqli_real_escape_string( $value );
+		global $connection;
+		return mysqli_real_escape_string($connection, $value );
 	}
 
 	//check if the query went well

@@ -6,6 +6,6 @@
 
 <?php
 	//Close database connection
-	include_once("db_connection.php");
-	db_disconnect();
+	global $connection;
+	mysqli_close($connection);
 ?>
