@@ -29,12 +29,12 @@
 		
 		if ( empty($errors) ) {
 			// Check database to see if username and the hashed password exist there.
-			$query = "SELECT id, username ";
-			$query .= "FROM users ";
+			$query = "SELECT userID, userName ";
+			$query .= "FROM user ";
 			$query .= "WHERE userName = '{$username}' ";
 			$query .= "AND passwordHash = '{$hashed_password}' ";
 			$query .= "LIMIT 1";
-			$result_set = mysqli_query($query);
+			$result_set = mysqli_query($connection, $query);
 			confirm_query($result_set);
 			if (mysqli_num_rows($result_set) == 1) {
 				// username/password authenticated
@@ -48,7 +48,7 @@
 				$query .= "FROM Admin ";
 				$query .= "WHERE userID = '{$found_user['userID']}' ";
 				$query .= "LIMIT 1";
-				$result_set = mysqli_query($query);
+				$result_set = mysqli_query($connection, $query);
 				confirm_query($result_set);
 				if (mysqli_num_rows($result_set) == 1) {
 					// user is admin

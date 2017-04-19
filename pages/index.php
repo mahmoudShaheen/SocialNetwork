@@ -11,6 +11,17 @@
 ?>
 
 <?php
+	//if user tries to enter admin area
+	//user will be redirected here
+	//with permission denied message
+	if (isset($_GET['permission']) && $_GET['permission'] == 1) {
+		$message = "Permission Denied!.";
+		if (!empty($message)) {
+			echo "<p class=\"message\">" . $message . "</p>";
+		}
+?>
+
+<?php
 	//dump data
 	echo phpinfo(); 
 ?>
