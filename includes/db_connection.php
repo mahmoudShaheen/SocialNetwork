@@ -8,21 +8,21 @@
 	//and Select the database 
 	function db_connect(){
 		//Create a database connection
-		$connection = mysql_connect(DB_SERVER,DB_USER,DB_PASS);
+		$connection = mysqli_connect(DB_SERVER, DB_USER, DB_PASS);
 		if (!$connection) {
-			die("Database connection failed: " . mysql_error());
+			die("Database connection failed");
 		}
 
 		//Select a database to use 
-		$db_select = mysql_select_db(DB_NAME,$connection);
+		$db_select = mysqli_select_db($connection, DB_NAME);
 		if (!$db_select) {
-			die("Database selection failed: " . mysql_error());
+			die("Database selection failed" );
 		}	
 	}
 
 	//Close connection
 	function db_disconnect(){
-		mysql_close($connection);
+		mysqli_close($connection);
 	}
 
 ?>
