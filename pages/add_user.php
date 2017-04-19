@@ -54,7 +54,7 @@
 		$password = "";
 	}
 ?>
-<?php include("includes/header.php"); ?>
+<?php include("../includes/header.php"); ?>
 <table id="structure">
 	<tr>
 		<td id="page">
@@ -79,4 +79,4 @@
 		</td>
 	</tr>
 </table>
-<?php include("includes/footer.php"); ?>
+<?php include("../includes/footer.php"); ?>

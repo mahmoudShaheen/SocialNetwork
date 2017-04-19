@@ -19,6 +19,7 @@
 		if (!empty($message)) {
 			echo "<p class=\"message\">" . $message . "</p>";
 		}
+	}
 ?>
 
 <?php

@@ -45,7 +45,7 @@
 	//redirect to home if normal user tries to enter admin area
 	//and also show a message permission denied
 	function not_admin_redirect(){
-		redirect_to("index.php?permission=1")
+		redirect_to("index.php?permission=1");
 	}
 	
 	//function to log out user
