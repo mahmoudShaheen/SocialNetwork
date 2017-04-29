@@ -47,3 +47,8 @@ Directory for putting image assets in.
 Directory for putting databases in.
 
 =====================================================
+[Live](./live): Live Team
+
+Directory for Live operations.
+
+=====================================================

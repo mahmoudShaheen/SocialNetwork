@@ -1,0 +1,54 @@
+h1{
+	background-color: brown;
+	width: 400px;
+	height: 40px;
+	text-align: center;
+}
+
+#chatlogs{
+	background-color: #333;
+	height: 200px;
+	width: 400px;
+	
+}
+
+#msg{
+	font-size: 15px;
+	width: 400px;
+	height: 50px;
+	border-width: 2px;
+	background-color: purple;
+	color: yellow;
+}
+#uname{
+	text-align: center;
+	width: 400px;
+	color: yellow;
+	background-color: black;
+	font-size: 20px;
+}
+
+.uname{
+	color:#0FF;
+	font-weight:bold;
+	font-size:15px;
+	font-family:Verdana, Geneva, sans-serif;
+}
+
+.button{
+	text-align:center;
+	background-color:#00F;
+	border-width:2px;
+	border-style:solid;
+	border-color:#000;
+	color:#fff;
+	padding-left:10px;
+	padding-right:10px;
+	text-decoration:none;
+}
+
+.msg{
+	color:#F90;
+	font-size:17px;
+	font-family:Georgia, "Times New Roman", Times, sans-serif;
+}
