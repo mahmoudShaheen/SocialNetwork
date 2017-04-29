@@ -41,6 +41,7 @@
 			mysqli_stmt_bind_param($login_stmt, "ss", $username, $hashed_password);
 			mysqli_stmt_execute($login_stmt);
 			$result_set = mysqli_stmt_get_result($login_stmt);
+			mysqli_stmt_close($login_stmt);
 			confirm_query($result_set);
 			if (mysqli_num_rows($result_set) == 1) {
 				// username/password authenticated
