@@ -74,12 +74,8 @@
 				$message = "Username/password combination incorrect.<br />
 					Please make sure your caps lock key is off and try again.";
 			}
-		} else {  
-			if (count($errors) == 1) {
-				$message = "There was 1 error in the form.";
-			} else {
-				$message = "There were " . count($errors) . " errors in the form.";
-			}
+		} else { 
+			$message = "There were " . count($errors) . " errors in the form.";
 		}
 	} else { // Form has not been submitted.
 		if (isset($_GET['logout']) && $_GET['logout'] == 1) {
