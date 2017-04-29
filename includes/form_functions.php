@@ -7,7 +7,7 @@
 	function check_required_fields($required_array) {
 		$field_errors = array();
 		foreach($required_array as $fieldname) {
-			if (!isset($_POST[$fieldname]) || (empty($_POST[$fieldname]) && $_POST[$fieldname] != 0)) { 
+			if (!isset($_POST[$fieldname]) || (empty($_POST[$fieldname]))) { 
 				$field_errors[] = $fieldname; 
 			}
 		}
@@ -31,7 +31,7 @@
 	function check_min_field_lengths($field_length_array) {
 		$field_errors = array();
 		foreach($field_length_array as $fieldname => $minlength ) {
-			if (strlen(trim(mysql_prep($_POST[$fieldname]))) > $minlength) { 
+			if (strlen(trim(mysql_prep($_POST[$fieldname]))) < $minlength) { 
 				$field_errors[] = $fieldname; 
 			}
 		}
