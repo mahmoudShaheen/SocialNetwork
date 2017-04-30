@@ -1,3 +1,8 @@
+<?php require_once("../../includes/session.php"); ?>
+<?php 
+	confirm_logged_in(); 
+	confirm_admin();
+?>
 <?php 
 //page to add ref. to other administrator pages.
 ?>
