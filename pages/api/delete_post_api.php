@@ -11,8 +11,8 @@
 		exit;
 	}else if(!admin_check()){//for users to be able to delete there own posts
 		//get post id
-		if (isset($_GET['post_id'])) {
-			$post_id = $_GET['post_id'];
+		if (isset($_POST['post_id'])) {
+			$post_id = $_POST['post_id'];
 		}else{
 			echo "[[Empty post ID!]]";
 			exit;
@@ -36,8 +36,8 @@
 		}
 	}else{//for admins to get post id
 		//get post id
-		if (isset($_GET['post_id'])) {
-			$post_id = $_GET['post_id'];
+		if (isset($_POST['post_id'])) {
+			$post_id = $_POST['post_id'];
 		}else{
 			echo "[[Empty post ID!]]";
 			exit;
@@ -46,7 +46,7 @@
 ?>
 
 <?php
-	//check if user already exist
+	//check if post exists
 	$query = "SELECT postID FROM posts WHERE postID = ?";
 	
 	$check_post_stmt = mysqli_prepare($connection, $query);
