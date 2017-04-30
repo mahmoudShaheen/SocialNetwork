@@ -74,7 +74,7 @@
 <table id="structure">
 	<tr>
 		<td id="page">
-			<h2>Create New User</h2>
+			<h2>Change Password</h2>
 			<?php if (!empty($message)) {echo "<p class=\"message\">" . $message . "</p>";} ?>
 			<?php if (!empty($errors)) { display_errors($errors); } ?>
 			<form action="change_password.php" method="post">
