@@ -1,16 +1,16 @@
 <html>
 	<head>
 		<title>CSE-ZU Social Network</title>
-		<link href="../stylesheets/public.css" media="all" rel="stylesheet" type="text/css" />
+		<link href="../../stylesheets/public.css" media="all" rel="stylesheet" type="text/css" />
 	</head>
 	<body>
 		<div id="header">
-			<h1>CSE-ZU Social Network</h1>
+			<h1>CSE-ZU Social Network: Admin Area</h1>
 			<?php
 				//show log out link if user logged in
 				require_once(dirname(__DIR__)."/includes/session.php"); 
 				if (logged_in_as()){
-					echo "<a href=\"logout.php\">Log out</a>";
+					echo "<a href=\"../logout.php\">Log out</a>";
 				}
 			
 			?>

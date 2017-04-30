@@ -3,7 +3,7 @@
 	//and regulating pages access
 	
 	//for redirect function
-	require("functions.php");
+	require(dirname(__DIR__)."/includes/functions.php");
 	
 	// Find the session
 	session_start();

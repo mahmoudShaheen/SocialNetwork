@@ -1,4 +1,4 @@
-<?php require_once("functions.php"); ?>
+<?php require_once(dirname(__DIR__)."/includes/functions.php"); ?>
 <?php
 	//File for forms validation functions
 	

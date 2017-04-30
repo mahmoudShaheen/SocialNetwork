@@ -2,7 +2,7 @@
 
 	//file for functions handle database connection
 	
-	require("db_constants.php");
+	require(dirname(__DIR__)."/includes/db_constants.php");
 
 	//Create a database connection
 	$connection = mysqli_connect(DB_SERVER, DB_USER, DB_PASS);
