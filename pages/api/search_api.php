@@ -12,8 +12,8 @@
 	}
 ?>
 <?php
-	if (isset($_GET['q'])) {
-			$q = $_GET['q'];
+	if (isset($_POST['q'])) {
+			$q = $_POST['q'];
 			$q = "%".$q."%";
 	}else{
 		echo "[[query can't be empty!]]";
