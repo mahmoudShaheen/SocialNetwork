@@ -62,7 +62,7 @@
 		$username = "";
 	}
 ?>
-<?php include("../../includes/header.php"); ?>
+<?php include("../../includes/header_admin.php"); ?>
 <table id="structure">
 	<tr>
 		<td id="page">
