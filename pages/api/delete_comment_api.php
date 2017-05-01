@@ -28,8 +28,8 @@
 		mysqli_stmt_execute($check_owner_stmt);
 		$result_set = mysqli_stmt_get_result($check_owner_stmt);
 		mysqli_stmt_close($check_owner_stmt);
-		$result = mysqli_fetch_array($result, MYSQLI_ASSOC);
-		$user_id = $result["userID"];
+		$result_set = mysqli_fetch_array($result_set, MYSQLI_ASSOC);
+		$user_id = $result_set["userID"];
 		if($user_id != $logged_user_id){ //if the logged user isn't the owner of the comment 
 			echo "[[Permission Denied!]]";
 			exit;
