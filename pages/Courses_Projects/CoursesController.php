@@ -3,7 +3,7 @@
  * @author Mustafa Kamel   May 1, 2017
  */
 
-/* To deal this script all you need is to create a file for each function and just write the two lines below
+/* To deal with this script all you need is to create a file for each function and just write the two lines below
  * first step >> require the file from current path 
  * second step >> call the required function and it will do all the needed work
  * congrats you are done ;)
