@@ -1,7 +1,18 @@
 <?php
 /**
- * @author Mustafa kamel   May 1, 2017
+ * @author Mustafa Kamel   May 1, 2017
  */
+
+/* To deal this script all you need is to create a file for each function and just write the two lines below
+ * first step >> require the file from current path 
+ * second step >> call the required function and it will do all the needed work
+ * congrats you are done ;)
+ */
+ /* example:
+				<?php
+				require_once (PATH."CoursesController.php");	// while PATH is the path of the file from current location
+				course_view();
+*/
 
 require_once ("CoursesProjectsModel.php");
 require_once ("../../includes/session.php");
@@ -9,19 +20,7 @@ require_once("../../includes/db_connection.php");
 require_once("../../includes/functions.php");
 require_once("../../includes/form_functions.php");
 
-/* To deal this script all you need is to create a file for each function and just write the two lines below
- * first step >> require the file from current path 
- * second step >> call the required function and it will do all the needed work
- * congrats you are done
- */
- /*
-				<?php
-				require_once (PATH."CoursesController.php");	// while PATH is the path of the file from current location
-				course_view();
-*/
-
-
-confirm_logged_in(); 
+confirm_logged_in();
 confirm_admin();
 /**
  * Inserts the contents of the course form as new entry (i.e new course) in the end of the Courses table when the form is submitted
@@ -39,13 +38,13 @@ function course_insert () {
 		$errors = array_merge($errors, check_max_field_lengths($fields_max_lengths));
 		$fields_min_lengths = array('name' => 3, 'department' => 3,  'grading_schema' => 5);
 		$errors = array_merge($errors, check_min_field_lengths($fields_min_lengths));
-		$name = trim(mysql_prep($_POST['name']));
-		$about = trim(mysql_prep($_POST['about']));
-		$department = trim(mysql_prep($_POST['department']));
-		$grading_schema = trim(mysql_prep($_POST['grading_schema']));
 
 		if ( empty($errors) ) {
 			//check if course already exist
+			$name = trim(mysql_prep($_POST['name']));
+			$about = trim(mysql_prep($_POST['about']));
+			$department = trim(mysql_prep($_POST['department']));
+			$grading_schema = trim(mysql_prep($_POST['grading_schema']));
 			$query = "SELECT `idCourses` FROM `Courses` WHERE `Name` = ?";
 			$check_course_stmt = mysqli_prepare($connection, $query);
 			mysqli_stmt_bind_param($check_course_stmt, "s", $name);
@@ -73,7 +72,6 @@ function course_insert () {
 		$grading_schema = "";
 	}
 }
-
 /**
  * Updates the data of specific course (ID) (one row) in the Courses table from the course form when the form is submitted
  * It is void and takes no parameters
@@ -90,14 +88,14 @@ function course_update () {
 		$errors = array_merge($errors, check_max_field_lengths($fields_max_lengths));
 		$fields_min_lengths = array('name' => 3, 'department' => 3,  'grading_schema' => 5);
 		$errors = array_merge($errors, check_min_field_lengths($fields_min_lengths));
-		$id = trim(mysql_prep($_POST['id']));				/*******{front ent} course id is found in input hidden type form element*******/
-		$name = trim(mysql_prep($_POST['name']));
-		$about = trim(mysql_prep($_POST['about']));
-		$department = trim(mysql_prep($_POST['department']));
-		$grading_schema = trim(mysql_prep($_POST['grading_schema']));
 
 		if ( empty($errors) ) {
 			//check if course already exist
+			$id = trim(mysql_prep($_POST['id']));				/*******{front ent} course id is found in input hidden type form element*******/
+			$name = trim(mysql_prep($_POST['name']));
+			$about = trim(mysql_prep($_POST['about']));
+			$department = trim(mysql_prep($_POST['department']));
+			$grading_schema = trim(mysql_prep($_POST['grading_schema']));
 			$query = "SELECT `idCourses` FROM `Courses` WHERE `Name` = ?";
 			$check_course_stmt = mysqli_prepare($connection, $query);
 			mysqli_stmt_bind_param($check_course_stmt, "s", $name);

@@ -1,6 +1,6 @@
 <?php
 /**
- * @author Mustafa kamel   April 18, 2017
+ * @author Mustafa Kamel   April 18, 2017
  */
 
 require_once("../../includes/db_connection.php");
@@ -112,6 +112,7 @@ function  get_course_by_id ($cid){
  /**
   * Inserts new entry (i.e new project) in the end of the Projects table
   * dateStarted and tag can't be null
+  * @param integer $supervisor
   * @param string $idea
   * @param string $name
   * @param string $abstract
@@ -121,10 +122,10 @@ function  get_course_by_id ($cid){
   * @param integer $tag
   * @return boolean
   */
-function insert_project ($idea, $name, $abstract=NULL, $pic=NULL, $st_date, $end_date=NULL, $tag){
+function insert_project ($supervisor, $idea, $name, $abstract=NULL, $pic=NULL, $st_date, $end_date=NULL, $tag){
     global $connection;
-    $project_ins= $connection->prepare("INSERT INTO `Projects` (`Idea`, `name`, `abstract`, `picture`, `dateStarted`, `dateEnded`, `tag`) VALUES (?, ?, ?, ?, ?, ?, ?)");
-    $project_ins->bind_param("ssssssi", $idea, $name, $abstract, $pic, $st_date, $end_date, $tag);
+    $project_ins= $connection->prepare("INSERT INTO `projects` (`Supervisor`, `Idea`, `name`, `abstract`, `Picture_URL`, `dateStarted`, `dateEnded`, `tag`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+    $project_ins->bind_param("issssssi", $supervisor, $idea, $name, $abstract, $pic, $st_date, $end_date, $tag);
     if($project_ins->execute()){
         $project_ins->close();
         return TRUE;
@@ -135,6 +136,7 @@ function insert_project ($idea, $name, $abstract=NULL, $pic=NULL, $st_date, $end
  * Updates the data of specific project (ID) (one row) in the Projects table
  * pid, dateStarted and tag can't be null
  * @param integer $pid
+ * @param string $supervisor
  * @param string $idea
  * @param string $name
  * @param string $abstract
@@ -144,10 +146,10 @@ function insert_project ($idea, $name, $abstract=NULL, $pic=NULL, $st_date, $end
  * @param integer $tag
  * @return boolean
  */
-function update_project ($pid, $idea, $name, $abstract=NULL, $pic=NULL, $st_date, $end_date=NULL, $tag){
+function update_project ($pid, $supervisor, $idea, $name, $abstract=NULL, $pic=NULL, $st_date, $end_date=NULL, $tag){
     global $connection;
-    $project_update=  $connection->prepare("UPDATE `Projects` SET `Idea`=?, `name`=?, `abstract`=?, `picture`=?, `dateStarted`, `dateEnded`, `tag` WHERE `idProjects`=?");
-    $project_update->bind_param("ssssssii", $idea, $name, $abstract, $pic, $st_date, $end_date, $tag, $pid);
+    $project_update=  $connection->prepare("UPDATE `projects` SET `Supervisor`=? `Idea`=?, `name`=?, `abstract`=?, `picture`=?, `dateStarted`, `dateEnded`, `tag` WHERE `idProjects`=?");
+    $project_update->bind_param("issssssii", $supervisor, $idea, $name, $abstract, $pic, $st_date, $end_date, $tag, $pid);
     if($project_update->execute()){
         $project_update->close();
         return TRUE;
@@ -161,7 +163,7 @@ function update_project ($pid, $idea, $name, $abstract=NULL, $pic=NULL, $st_date
  */
 function delete_project ($pid){
     global $connection;
-    $project_delete= $connection->prepare("DELETE FROM `Projects` WHERE `idProjects`=?");
+    $project_delete= $connection->prepare("DELETE FROM `projects` WHERE `idProjects`=?");
     $project_delete->bind_param("i", $pid);
     if($project_delete->execute()){
         $project_delete->close();
@@ -176,7 +178,7 @@ function delete_project ($pid){
 function get_projects (){
     global $connection;
     $rows = array();
-    $query = "SELECT * FROM `Projects`";
+    $query = "SELECT * FROM `projects`";
     $result = mysqli_query($connection, $query);
     if (mysqli_num_rows($result) > 0)
         while ($row = mysqli_fetch_assoc($result)){
@@ -193,7 +195,7 @@ function get_projects (){
 function  get_project_by_id ($pid){
     $pid= intval($pid);
     global $connection;
-    $query = "SELECT * FROM `Projects` WHERE `idProjects` = ?";
+    $query = "SELECT * FROM `projects` WHERE `idProjects` = ?";
 	$stmt = mysqli_prepare($connection, $query);
 	mysqli_stmt_bind_param($stmt, "s", $pid);
 	if (mysqli_stmt_execute($stmt)) {
