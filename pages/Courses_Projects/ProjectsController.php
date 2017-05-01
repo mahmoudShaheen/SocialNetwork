@@ -20,8 +20,8 @@ require_once("../../includes/db_connection.php");
 require_once("../../includes/functions.php");
 require_once("../../includes/form_functions.php");
 
-//confirm_logged_in(); 
-//confirm_admin();
+confirm_logged_in(); 
+confirm_admin();
 /**
  * Inserts the contents of the project form as new entry (i.e new project) in the end of the `projects` table when the form is submitted
  * It is void and takes no parameters
