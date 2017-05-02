@@ -63,10 +63,20 @@
 	}
 
 	//keys: postID, userID, post, *tag, description, time
-	function get_user_posts($user_id){
-		$query = "SELECT * FROM posts WHERE userID = ? ORDER BY time DESC"
+	function get_user_posts($user_id, $page_number){
+		$offset = $page_number * 10;
+		$query = "SELECT * FROM posts WHERE userID = ? "
+		$query .="LIMIT 10 "
+		if($offset != 0){
+			$query .="OFFSET ? "
+		}
+		$query .= "ORDER BY time DESC"
 		$get_posts_stmt =  mysqli_prepare($connection, $query);
-		mysqli_stmt_bind_param($get_posts_stmt, "i", $user_id);
+		if($offset != 0){
+			mysqli_stmt_bind_param($get_posts_stmt, "ii", $user_id, $offset);
+		}else{
+			mysqli_stmt_bind_param($get_posts_stmt, "i", $user_id);
+		}
 		mysqli_stmt_execute($get_posts_stmt);
 		$result_set = mysqli_stmt_get_result($get_posts_stmt);
 		mysqli_stmt_close($get_posts_stmt);
@@ -195,6 +205,25 @@
 		mysqli_stmt_execute($get_project_tags_stmt);
 		$result_set = mysqli_stmt_get_result($get_project_tags_stmt);
 		mysqli_stmt_close($get_project_tags_stmt);
+		return $result_set
+	}
+	
+	//keys: postID, userID, post, *tag, description, time
+	function get_all_posts( $page_number){
+		$offset = $page_number * 10;
+		$query = "SELECT * FROM posts "
+		$query .="LIMIT 10 "
+		if($offset != 0){
+			$query .="OFFSET ? "
+		}
+		$query .= "ORDER BY time DESC"
+		$get_posts_stmt =  mysqli_prepare($connection, $query);
+		if($offset != 0){
+			mysqli_stmt_bind_param($get_posts_stmt, "i", $offset);
+		}
+		mysqli_stmt_execute($get_posts_stmt);
+		$result_set = mysqli_stmt_get_result($get_posts_stmt);
+		mysqli_stmt_close($get_posts_stmt);
 		return $result_set
 	}
 
