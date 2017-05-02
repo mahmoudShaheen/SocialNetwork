@@ -40,24 +40,24 @@
 		//get post owner data
 		 $post_user = get_user_data($post_row["userID"]);
 		 if( $post_user_row = mysqli_fetch_assoc($post_user)) {
-			echo $post_user_row["UserName"];
-			echo $post_user_row["FirstName"];
-			echo $post_user_row["MiddleName"];
-			echo $post_user_row["LastName"];
-			echo $post_user_row["PictureURL"];
-			echo $post_user_row["collegeRole"];
+			echo htmlentities($post_user_row["UserName"]);
+			echo htmlentities($post_user_row["FirstName"]);
+			echo htmlentities($post_user_row["MiddleName"]);
+			echo htmlentities($post_user_row["LastName"]);
+			echo htmlentities($post_user_row["PictureURL"]);
+			echo htmlentities($post_user_row["collegeRole"]);
 			
 		 }
 		 //post payload
-		echo $post_row["time"];
-		echo $post_row["userID"];
-		echo $post_row["post"];
-		echo $post_row["postID"];
+		echo htmlentities($post_row["time"]);
+		echo htmlentities($post_row["userID"]);
+		echo htmlentities($post_row["post"]);
+		echo htmlentities($post_row["postID"]);
 		
 		//get post tags
 		$post_tags = get_post_tags($post_id);
 		for( $post_tag_row = mysqli_fetch_assoc($post_tags)) {
-			echo $post_tag_row["tag"];
+			echo htmlentities($post_tag_row["tag"]);
 		}
 		
 		//get post comments
@@ -66,16 +66,16 @@
 			 //get comment owner data
 			$comment_user = get_user_data($post_comment_row["userID"]);
 			 if( $comment_user_row = mysqli_fetch_assoc($comment_user)) {
-				echo $comment_user_row["UserName"];
-				echo $comment_user_row["FirstName"];
-				echo $comment_user_row["MiddleName"];
-				echo $comment_user_row["LastName"];
-				echo $comment_user_row["PictureURL"];
-				echo $comment_user_row["collegeRole"];
+				echo htmlentities($comment_user_row["UserName"]);
+				echo htmlentities($comment_user_row["FirstName"]);
+				echo htmlentities($comment_user_row["MiddleName"]);
+				echo htmlentities($comment_user_row["LastName"]);
+				echo htmlentities($comment_user_row["PictureURL"]);
+				echo htmlentities($comment_user_row["collegeRole"]);
 			 }
 			 //get comment time and payload
-			echo $post_comment_row["comment"];
-			echo $post_comment_row["time"];
+			echo htmlentities($post_comment_row["comment"]);
+			echo htmlentities($post_comment_row["time"]);
 		 }
 	}
 ?>

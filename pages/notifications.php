@@ -32,10 +32,10 @@
 	$query = "UPDATE Notification SET read = 1 WHERE notification_id = ?"
 	$set_read_stmt = mysqli_prepare($connection, $query);
 	for ( $row = mysqli_fetch_assoc($result)) {
-		echo $row["time_created"];
-		echo $row["payload"];
-		echo $row["redirection_url"]; //to redirect user on click
-		echo $row["read?"]; //new or old notification
+		echo htmlentities($row["time_created"]);
+		echo htmlentities($row["payload"]);
+		echo htmlentities($row["redirection_url"]); //to redirect user on click
+		echo htmlentities($row["read?"]); //new or old notification
 		mysqli_stmt_bind_param($set_read_stmt, "i", $row["notification_id"]);
 		mysqli_stmt_execute($set_read_stmt);
 	}
