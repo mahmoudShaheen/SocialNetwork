@@ -5,12 +5,6 @@
 	confirm_logged_in(); 
 ?>
 
-<?php 
-	//database connection
-	require_once("../../includes/db_connection.php");
-	global $connection;
-?>
-
 <?php
 	//html header
 	include("../includes/header.php"); 
@@ -28,20 +22,53 @@
 
 <?php
 	//get post from db
-	$query = "SELECT * FROM posts WHERE postID = ? "
-	$get_post_stmt =  mysqli_prepare($connection, $query);
-	mysqli_stmt_bind_param($get_post_stmt, "i", $post_id);
-	mysqli_stmt_execute($get_post_stmt);
-	$result_set = mysqli_stmt_get_result($get_post_stmt);
-	mysqli_stmt_close($get_post_stmt);
-
-	for ( $row = mysqli_fetch_assoc($result)) {
-		echo $row["time"];
-		echo $row["userID"];
-		echo $row["post"];
-		echo $row["read?"]; //new or old notification
-		mysqli_stmt_bind_param($set_read_stmt, "i", $row["notification_id"]);
-		mysqli_stmt_execute($set_read_stmt);
+	require_once("../includes/social_functions.php"); 
+	
+	$post = get_post_data($post_id);
+	
+	if( $post_row = mysqli_fetch_assoc($post)) {
+		//get post owner data
+		 $post_user = get_user_data($post_row["userID"]);
+		 if( $post_user_row = mysqli_fetch_assoc($post_user)) {
+			echo $post_user_row["UserName"];
+			echo $post_user_row["FirstName"];
+			echo $post_user_row["MiddleName"];
+			echo $post_user_row["LastName"];
+			echo $post_user_row["PictureURL"];
+			echo $post_user_row["collegeRole"];
+			
+		 }
+		 //post payload
+		echo $post_row["time"];
+		echo $post_row["userID"];
+		echo $post_row["post"];
+		echo $post_row["postID"];
+		
+		//get post tags
+		$post_tags = get_post_tags($post_id);
+		for( $post_tag_row = mysqli_fetch_assoc($post_tags)) {
+			echo $post_tag_row["tag"];
+		}
+		
+		//get post comments
+		$post_comment = get_post_comments($post_row["postID"]);
+		 for( $post_comment_row = mysqli_fetch_assoc($post_comment)) {
+			 //get comment owner data
+			$comment_user = get_user_data($post_comment_row["userID"]);
+			 if( $comment_user_row = mysqli_fetch_assoc($comment_user)) {
+				echo $comment_user_row["UserName"];
+				echo $comment_user_row["FirstName"];
+				echo $comment_user_row["MiddleName"];
+				echo $comment_user_row["LastName"];
+				echo $comment_user_row["PictureURL"];
+				echo $comment_user_row["collegeRole"];
+			 }
+			 //get comment time and payload
+			echo $post_comment_row["comment"];
+			echo $post_comment_row["time"];
+		 }
+	}else{//post not found
+		echo "post not found";
 	}
 ?>
 
