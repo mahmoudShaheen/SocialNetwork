@@ -3,7 +3,7 @@
 	//if not redirect to login page
 	require_once("../../includes/session.php"); 
 	confirm_logged_in(); 
-	$user_id = logged_in_as();
+	$user_id = $_SESSION['user_id'];
 ?>
 <?php 
 	require_once("../../includes/db_connection.php");
@@ -36,7 +36,7 @@
 			//add data to database
 			$query = "UPDATE Users SET FirstName = ?, MiddleName = ?, LastName = ?, about = ? WHERE userID = ?";
 			$update_profile_stmt =  mysqli_prepare($connection, $query);
-			mysqli_stmt_bind_param($update_profile_stmt, "i", $first_name, $middle_name, $last_name, $about, $user_id);
+			mysqli_stmt_bind_param($update_profile_stmt, "ssssi", $first_name, $middle_name, $last_name, $about, $user_id);
 			mysqli_stmt_execute($update_profile_stmt);
 			$result_set = mysqli_stmt_get_result($update_profile_stmt);
 			mysqli_stmt_close($update_profile_stmt);
@@ -51,26 +51,31 @@
 		}
 	} else { // Form has not been submitted.
 		//get user data from db
-		require_once("../includes/social_functions.php"); 
+		require_once("../../includes/social_functions.php"); 
 		$user = get_user_data($user_id);
-		$college_role = "";
-		if( $user_row = mysqli_fetch_assoc($user)) {
+		if( ($user_row = mysqli_fetch_assoc($user)) != null) {
 			$first_name = $user_row["FirstName"];
 			$middle_name =  $user_row["MiddleName"];
 			$last_name = $user_row["LastName"];
 			$picture_url = $user_row["PictureURL"];
 			$about = $user_row["about"];
+		}else{
+			$first_name = "";
+			$middle_name =  "";
+			$last_name = "";
+			$picture_url = "";
+			$about = "";
 		}
 	}
 ?>
-<?php include("../includes/header.php"); ?>
+<?php include("../../includes/header.php"); ?>
 <table id="structure">
 	<tr>
 		<td id="page">
 			<h2>Staff Login</h2>
 			<?php if (!empty($message)) {echo "<p class=\"message\">" . $message . "</p>";} ?>
 			<?php if (!empty($errors)) { display_errors($errors); } ?>
-			<form action="login.php" method="post">
+			<form action="edit_profile.php" method="post">
 			<table>
 				<tr>
 					<td>First Name:</td>
@@ -90,7 +95,7 @@
 				</tr>
 				<tr>
 					<td colspan="2">
-						<input type="submit" name="submit" value="Login" />
+						<input type="submit" name="submit" value="update" />
 						<input type="reset">
 					</td>
 				</tr>
@@ -114,24 +119,24 @@
 	//for calling API "edit_profile_api" using using JS
 	//for adding or deleting email, skill, position
 	$emails_results = get_user_emails($user_id);
-	for( $email_row = mysqli_fetch_assoc($emails_results)) {
+	while( $email_row = mysqli_fetch_assoc($emails_results)) {
 		echo htmlentities($email_row["email"]); 
 	}
 	 
 	$phone_numbers_results = get_user_phone_numbers($user_id);
-	for( $phone_row = mysqli_fetch_assoc($phone_numbers_results)) {
+	while( $phone_row = mysqli_fetch_assoc($phone_numbers_results)) {
 		echo htmlentities($phone_row["phone_number"]);
 	}
 	
 	$skills_results = get_user_skills($user_id);
-	for( $skill_row = mysqli_fetch_assoc($skills_results)) {
+	while( $skill_row = mysqli_fetch_assoc($skills_results)) {
 		echo htmlentities($skill_row["skill"]);
 	}
 	
 	$positions_results = get_user_positions($user_id);
-	for( $position_row = mysqli_fetch_assoc($positions_results)) {
+	while( $position_row = mysqli_fetch_assoc($positions_results)) {
 		echo htmlentities($position_row["company"]);
 		echo htmlentities($position_row["positionName"]);
 	}
 ?>
-<?php include("../includes/footer.php"); ?>
+<?php include("../../includes/footer.php"); ?>
