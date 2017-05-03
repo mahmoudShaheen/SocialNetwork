@@ -150,8 +150,8 @@
 	//keys: idCourses, Name, about, department, Grading Schema
 	function get_student_courses($user_id){
         global $connection;
-		$query = "SELECT * FROM Courses WHERE idCourses = ";
-		$query .= "(SELECT Project/Course_id FROM student_have_Courses WHERE student_idStudent = ?)  ORDER BY Name DESC";
+		$query = "SELECT * FROM courses WHERE idCourses = ";
+		$query .= "(SELECT `Project/Course_id` FROM student_have_Courses WHERE student_idStudent = ?)  ORDER BY Name DESC";
 		$get_student_courses_stmt =  mysqli_prepare($connection, $query);
 		mysqli_stmt_bind_param($get_student_courses_stmt, "i", $user_id);
 		mysqli_stmt_execute($get_student_courses_stmt);
