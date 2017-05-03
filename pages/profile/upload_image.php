@@ -3,12 +3,14 @@
 	//if not redirect to login page
 	require_once("../../includes/session.php"); 
 	confirm_logged_in(); 
-	$user_id = logged_in_as();
+	$user_id = $_SESSION['user_id'];
 ?>
 
 <?php
 	$target_dir = "../../uploads/user_images/";
-	$target_file = $target_dir .$user_id;
+	$original_file = basename($_FILES["fileToUpload"]["name"]);
+	$imageFileType = "." . pathinfo($original_file,PATHINFO_EXTENSION);
+	$target_file = $target_dir .$user_id .$imageFileType;
 	$uploadOk = 1;
 	$imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
 	// Check if image file is a actual image or fake image
