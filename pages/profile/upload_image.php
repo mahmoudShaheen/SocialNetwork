@@ -9,8 +9,7 @@
 <?php
 	$target_dir = "../../uploads/user_images/";
 	$original_file = basename($_FILES["fileToUpload"]["name"]);
-	$imageFileType = "." . pathinfo($original_file,PATHINFO_EXTENSION);
-	$target_file = $target_dir .$user_id .$imageFileType;
+	$target_file = $target_dir .$user_id .".png"; //any type will be saved as PNG
 	$uploadOk = 1;
 	$imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
 	// Check if image file is a actual image or fake image
@@ -26,8 +25,10 @@
 	}
 	// Check if file already exists
 	if (file_exists($target_file)) {
-		echo "Sorry, file already exists.";
-		$uploadOk = 0;
+		if(!unlink($target_dir.$user_id .".png")){ //if file already exists delete old image
+			echo "Sorry, file already exists.";
+			$uploadOk = 0;
+		}
 	}
 	// Check file size
 	if ($_FILES["fileToUpload"]["size"] > 500000) {
