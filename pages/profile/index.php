@@ -1,21 +1,25 @@
 <?php 
 	//check if user logged in
 	//if not redirect to login page
-	require_once("../includes/session.php"); 
+	require_once("../../includes/session.php"); 
 	confirm_logged_in(); 
 ?>
-
+<?php 
+	require_once("../../includes/db_connection.php");
+	global $connection;
+?>
 <?php
 	//html header
-	include("../includes/header.php"); 
+	include("../../includes/header.php"); 
 ?>
 
 <?php
 	//get user id from query string if no query string logged in user profile is shown
 	if (isset($_GET['user_id']) ) {
 		$user_id = $_GET['user_id'];
+		echo $user_id;
 	}else{
-		$user_id = logged_in_as();
+		$user_id = $_SESSION['user_id'];
 	}
 ?>
 <?php
@@ -30,7 +34,7 @@
 <?php
 	
 	//check if user already exist
-	$query = "SELECT userID FROM users WHERE userID = ?";
+	$query = "SELECT userID FROM Users WHERE userID = ?";
 	
 	$check_user_stmt = mysqli_prepare($connection, $query);
 	mysqli_stmt_bind_param($check_user_stmt, "s", $user_id);
@@ -46,7 +50,7 @@
 		exit;
 	} else {//username is correct
 		//get user data from db
-		require_once("../includes/social_functions.php"); 
+		require_once("../../includes/social_functions.php"); 
 		$user = get_user_data($user_id);
 		$college_role = "";
 		 if( $user_row = mysqli_fetch_assoc($user)) {
@@ -61,29 +65,29 @@
 		 }
 		 
 		$emails = get_user_emails($user_id);
-		 for( $email_row = mysqli_fetch_assoc($emails)) {
+		 while( $email_row = mysqli_fetch_assoc($emails)) {
 			echo htmlentities($email_row["email"]);
 		 }
 		 
 		$phone_numbers = get_user_phone_numbers($user_id);
-		for( $phone_row = mysqli_fetch_assoc($phone_numbers)) {
+		while( $phone_row = mysqli_fetch_assoc($phone_numbers)) {
 			echo htmlentities($phone_row["phone_number"]);
 		 }
 		
 		$skills = get_user_skills($user_id);
-		for( $skill_row = mysqli_fetch_assoc($skills)) {
+		while( $skill_row = mysqli_fetch_assoc($skills)) {
 			echo htmlentities($skill_row["skill"]);
 		}
 		
 		$positions = get_user_positions($user_id);
-		for( $position_row = mysqli_fetch_assoc($positions)) {
+		while( $position_row = mysqli_fetch_assoc($positions)) {
 			echo htmlentities($position_row["company"]);
 			echo htmlentities($position_row["positionName"]);
 		}
 		
 		if($college_role == "Professor" || $college_role == "TA"){
 			$researches = get_user_researches($user_id);
-			for( $researches_row = mysqli_fetch_assoc($researches)) {
+			while( $researches_row = mysqli_fetch_assoc($researches)) {
 				echo htmlentities($researches_row["Title"]);
 				echo htmlentities($researches_row["Idea"]);
 				echo htmlentities($researches_row["idResearches"]);
@@ -91,7 +95,7 @@
 		}
 		
 		$projects = get_user_projects($user_id);
-		for( $projects_row = mysqli_fetch_assoc($projects)) {
+		while( $projects_row = mysqli_fetch_assoc($projects)) {
 				echo htmlentities($projects_row["Picture_URL"]);
 				echo htmlentities($projects_row["name"]);
 				echo htmlentities($projects_row["Idea"]);
@@ -101,7 +105,7 @@
 		if($college_role == "student"){
 			//keys: idCourses, Name, about, department, Grading Schema
 			$student_courses = get_student_courses($user_id);
-			for( $student_courses_row = mysqli_fetch_assoc($student_courses)) {
+			while( $student_courses_row = mysqli_fetch_assoc($student_courses)) {
 				echo htmlentities($student_courses_row["Name"]);
 				echo htmlentities($student_courses_row["about"]);
 				echo htmlentities($student_courses_row["department"]);
@@ -111,7 +115,7 @@
 		
 		if($college_role == "Professor" || $college_role == "TA"){
 			$prof_courses = get_prof_courses($user_id);
-			for( $prof_courses_row = mysqli_fetch_assoc($prof_courses)) {
+			while( $prof_courses_row = mysqli_fetch_assoc($prof_courses)) {
 					echo htmlentities($prof_courses_row["Name"]);
 					echo htmlentities($prof_courses_row["about"]);
 					echo htmlentities($prof_courses_row["department"]);
@@ -122,7 +126,7 @@
 		
 		//get one page of user posts "10 posts" , use query string to choose another set of posts
 		$posts = get_user_posts($user_id, $page_number);
-		for( $post_row = mysqli_fetch_assoc($post)) {
+		while( $post_row = mysqli_fetch_assoc($posts)) {
 			//get post owner data
 			 $post_user = get_user_data($post_row["userID"]);
 			 if( $post_user_row = mysqli_fetch_assoc($post_user)) {
@@ -139,16 +143,17 @@
 			echo htmlentities($post_row["userID"]);
 			echo htmlentities($post_row["post"]);
 			echo htmlentities($post_row["postID"]);
+			$post_id = $post_row["postID"];
 			
 			//get post tags
 			$post_tags = get_post_tags($post_id);
-			for( $post_tag_row = mysqli_fetch_assoc($post_tags)) {
+			while( $post_tag_row = mysqli_fetch_assoc($post_tags)) {
 				echo htmlentities($post_tag_row["tag"]);
 			}
 			
 			//get post comments
 			$post_comment = get_post_comments($post_row["postID"]);
-			 for( $post_comment_row = mysqli_fetch_assoc($post_comment)) {
+			 while( $post_comment_row = mysqli_fetch_assoc($post_comment)) {
 				 //get comment owner data
 				$comment_user = get_user_data($post_comment_row["userID"]);
 				 if( $comment_user_row = mysqli_fetch_assoc($comment_user)) {
@@ -169,5 +174,5 @@
 
 <?php 
 	//html footer + close database connection if any
-	include("../includes/footer.php"); 
+	include("../../includes/footer.php"); 
 ?>

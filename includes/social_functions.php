@@ -70,11 +70,11 @@
         global $connection;
 		$offset = $page_number * 10;
 		$query = "SELECT * FROM posts WHERE userID = ? ";
-		$query .="LIMIT 10 ";
 		if($offset != 0){
 			$query .="OFFSET ? ";
 		}
-		$query .= "ORDER BY time DESC";
+		$query .= "ORDER BY time DESC ";
+		$query .="LIMIT 10 ";
 		$get_posts_stmt =  mysqli_prepare($connection, $query);
 		if($offset != 0){
 			mysqli_stmt_bind_param($get_posts_stmt, "ii", $user_id, $offset);
@@ -112,8 +112,8 @@
 	//keys: idResearches, Title, Idea
 	function get_user_researches($user_id){
         global $connection;
-		$query = "SELECT * FROM Researches WHERE idResearches = ";
-		$query .= "(SELECT Researches_idResearches FROM Professor_Working_On_Researches WHERE Professor/Teacher_id = ?) ORDER BY name DESC";
+		$query = "SELECT * FROM researches WHERE idResearches = ";
+		$query .= "(SELECT Researches_idResearches FROM professor_working_on_researches WHERE `Professor/Teacher_id` = ?) ORDER BY Title DESC";
 		$get_researches_stmt =  mysqli_prepare($connection, $query);
 		mysqli_stmt_bind_param($get_researches_stmt, "i", $user_id);
 		mysqli_stmt_execute($get_researches_stmt);
@@ -164,7 +164,7 @@
 	function get_prof_courses($user_id){
         global $connection;
 		$query = "SELECT * FROM Courses WHERE idCourses = ";
-		$query .= "(SELECT Courses_idCourses FROM professor/teacher_can_teach_courses WHERE Professor/Teacher_idProfessor = ?) ORDER BY Name DESC";
+		$query .= "(SELECT Courses_idCourses FROM `professor/teacher_can_teach_courses` WHERE `Professor/Teacher_idProfessor` = ?) ORDER BY Name DESC";
 		$get_prof_courses_stmt =  mysqli_prepare($connection, $query);
 		mysqli_stmt_bind_param($get_prof_courses_stmt, "i", $user_id);
 		mysqli_stmt_execute($get_prof_courses_stmt);
