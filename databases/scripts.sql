@@ -1,39 +1,45 @@
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
+DROP SCHEMA IF EXISTS `mydb` ;
 CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
 USE `mydb` ;
+DROP TABLE IF EXISTS `mydb`.`Devices/Component` ;
 CREATE TABLE IF NOT EXISTS `mydb`.`Devices/Component` (
-  `idDevices/Component` INT UNSIGNED NOT NULL,
-  `Name` VARCHAR(45) NOT NULL COMMENT 'device/component name',
+  `idDevices/Component` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `Name` TEXT NOT NULL COMMENT 'device/component name',
   `Functional` TINYINT NOT NULL COMMENT 'is it working or is it damaged',
   `UnitCount` INT NULL COMMENT 'how may units are there',
   `State_` TINYINT NULL COMMENT 'borrowed(1) or in lab(0)',
-  `picture_URL` VARCHAR(45) NULL,
-  `Datasheet_URL` VARCHAR(45) NULL,
+  `picture_URL` TEXT NULL,
+  `Datasheet_URL` TEXT NULL,
   PRIMARY KEY (`idDevices/Component`))
 ENGINE = InnoDB;
+DROP TABLE IF EXISTS `mydb`.`Users` ;
 CREATE TABLE IF NOT EXISTS `mydb`.`Users` (
   `userID` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `FirstName` VARCHAR(45) NOT NULL COMMENT 'Name',
-  `MiddleName` VARCHAR(45) NULL COMMENT 'Name',
-  `LastName` VARCHAR(45) NOT NULL COMMENT 'Name',
-  `UserName` VARCHAR(45) NOT NULL,
-  `PasswordHash` VARCHAR(45) NOT NULL,
-  `PictureURL` VARCHAR(45) NULL,
-  `about` VARCHAR(300) NULL,
+  `FirstName` TEXT NOT NULL COMMENT 'Name',
+  `MiddleName` TEXT NULL COMMENT 'Name',
+  `LastName` TEXT NOT NULL COMMENT 'Name',
+  `UserName` VARCHAR(30) NOT NULL,
+  `PasswordHash` TEXT NOT NULL,
+  `PictureURL` TEXT NULL,
+  `about` TEXT NULL,
   `lastActiveTime` DATETIME NULL,
   `collegeRole` ENUM('student', 'Professor', 'TA', 'Employee', 'Alumni') NOT NULL COMMENT 'can only choose one and only one of the following: student, professor or TA.\nthe choice must be one of them.\n---------------------------------------------------------\nif you want to choose more than one of student, professor or TA then use SET() instead of ENUM()',
   PRIMARY KEY (`userID`),
-  UNIQUE INDEX `userID_UNIQUE` (`userID` ASC))
+  INDEX `userID_idx` (`userID` ASC),
+  UNIQUE INDEX `userID_UNIQUE` (`userID` ASC),
+  UNIQUE INDEX `UserName_UNIQUE` (`UserName` ASC))
 ENGINE = InnoDB;
+DROP TABLE IF EXISTS `mydb`.`Projects` ;
 CREATE TABLE IF NOT EXISTS `mydb`.`Projects` (
-  `idProjects` INT UNSIGNED NOT NULL,
+  `idProjects` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `Supervisor` INT UNSIGNED NOT NULL COMMENT 'the professor who supervises this project',
-  `Idea` VARCHAR(450) NULL COMMENT 'idea of the project',
-  `name` VARCHAR(45) NULL COMMENT 'name of the project',
-  `abstract` VARCHAR(1000) NULL COMMENT 'a brief description of the project',
-  `Picture_URL` VARCHAR(45) NULL COMMENT 'picture of the project',
+  `Idea` TEXT NULL COMMENT 'idea of the project',
+  `name` TEXT NULL COMMENT 'name of the project',
+  `abstract` TEXT NULL COMMENT 'a brief description of the project',
+  `Picture_URL` TEXT NULL COMMENT 'picture of the project',
   `dateStarted` DATETIME NOT NULL COMMENT 'date on which the project started',
   `dateEnded` DATETIME NULL COMMENT 'date on which the project ended, if the project is still incomplete this leave it NULL',
   `tag` INT UNSIGNED NULL COMMENT '#tag for this project',
@@ -44,28 +50,31 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Projects` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+DROP TABLE IF EXISTS `mydb`.`Courses` ;
 CREATE TABLE IF NOT EXISTS `mydb`.`Courses` (
   `idCourses` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `Name` VARCHAR(45) NOT NULL COMMENT 'name if the course',
-  `about` VARCHAR(45) NULL COMMENT 'a brief description of the course',
-  `department` VARCHAR(45) NULL COMMENT 'the department that this course falls under its categories',
-  `Grading Schema` VARCHAR(45) NULL COMMENT 'how many points are assigned for this course (150,200 ....etc)',
+  `Name` TEXT NOT NULL COMMENT 'name if the course',
+  `about` TEXT NULL COMMENT 'a brief description of the course',
+  `department` TEXT NULL COMMENT 'the department that this course falls under its categories',
+  `Grading Schema` TEXT NULL COMMENT 'how many points are assigned for this course (150,200 ....etc)',
   PRIMARY KEY (`idCourses`))
 ENGINE = InnoDB;
+DROP TABLE IF EXISTS `mydb`.`Researches` ;
 CREATE TABLE IF NOT EXISTS `mydb`.`Researches` (
   `idResearches` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `Title` VARCHAR(45) NOT NULL COMMENT 'title or name of the research',
-  `Idea` VARCHAR(45) NULL COMMENT 'idea of the research',
+  `Title` TEXT NOT NULL COMMENT 'title or name of the research',
+  `Idea` TEXT NULL COMMENT 'idea of the research',
   PRIMARY KEY (`idResearches`))
 ENGINE = InnoDB;
+DROP TABLE IF EXISTS `mydb`.`Labs` ;
 CREATE TABLE IF NOT EXISTS `mydb`.`Labs` (
-  `labID` INT UNSIGNED NOT NULL,
-  `Lab Name` VARCHAR(45) NOT NULL COMMENT 'name of the lab',
+  `labID` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `Lab Name` TEXT NOT NULL COMMENT 'name of the lab',
   `idGuardian` INT UNSIGNED NOT NULL COMMENT 'the employee who is responsible for this lab',
   `Contents` INT UNSIGNED NULL COMMENT 'what is inside this lab',
-  `location` VARCHAR(45) NULL COMMENT 'the loaction of the lab',
-  `about` VARCHAR(45) NULL COMMENT 'a brief description for the lab',
-  `picture` VARCHAR(45) NULL COMMENT 'a picture for the lab',
+  `location` TEXT NULL COMMENT 'the loaction of the lab',
+  `about` TEXT NULL COMMENT 'a brief description for the lab',
+  `picture` TEXT NULL COMMENT 'a picture for the lab',
   PRIMARY KEY (`labID`),
   UNIQUE INDEX `Contents_UNIQUE` (`Contents` ASC),
   CONSTRAINT `guardian`
@@ -74,6 +83,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Labs` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+DROP TABLE IF EXISTS `mydb`.`Safe` ;
 CREATE TABLE IF NOT EXISTS `mydb`.`Safe` (
   `idSafe` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `Content` INT UNSIGNED NOT NULL,
@@ -90,6 +100,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Safe` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+DROP TABLE IF EXISTS `mydb`.`Student_have_Courses` ;
 CREATE TABLE IF NOT EXISTS `mydb`.`Student_have_Courses` (
   `Student_idStudent` INT UNSIGNED NOT NULL COMMENT 'we can use\" Professor/Teacher_Can_Teach_Courses\" table to represent this relationship',
   `Project/Course_id` INT UNSIGNED NOT NULL,
@@ -105,6 +116,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Student_have_Courses` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+DROP TABLE IF EXISTS `mydb`.`Professor/Teacher_Can_Teach_Courses` ;
 CREATE TABLE IF NOT EXISTS `mydb`.`Professor/Teacher_Can_Teach_Courses` (
   `Professor/Teacher_idProfessor` INT UNSIGNED NOT NULL,
   `Courses_idCourses` INT UNSIGNED NOT NULL,
@@ -121,6 +133,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Professor/Teacher_Can_Teach_Courses` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+DROP TABLE IF EXISTS `mydb`.`Professor_Working_On_Researches` ;
 CREATE TABLE IF NOT EXISTS `mydb`.`Professor_Working_On_Researches` (
   `Professor/Teacher_id` INT UNSIGNED NOT NULL,
   `Researches_idResearches` INT UNSIGNED NOT NULL,
@@ -137,6 +150,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Professor_Working_On_Researches` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+DROP TABLE IF EXISTS `mydb`.`Admin` ;
 CREATE TABLE IF NOT EXISTS `mydb`.`Admin` (
   `userID` INT UNSIGNED NOT NULL COMMENT 'id of admin',
   PRIMARY KEY (`userID`),
@@ -146,11 +160,13 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Admin` (
     ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+DROP TABLE IF EXISTS `mydb`.`skills` ;
 CREATE TABLE IF NOT EXISTS `mydb`.`skills` (
-  `skillID` INT UNSIGNED NOT NULL,
-  `skill` VARCHAR(45) NULL COMMENT 'skill name',
+  `skillID` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `skill` TEXT NULL COMMENT 'skill name',
   PRIMARY KEY (`skillID`))
 ENGINE = InnoDB;
+DROP TABLE IF EXISTS `mydb`.`User_has_skills` ;
 CREATE TABLE IF NOT EXISTS `mydb`.`User_has_skills` (
   `Users_userID` INT UNSIGNED NOT NULL,
   `skills_skillID` INT UNSIGNED NOT NULL,
@@ -168,24 +184,25 @@ CREATE TABLE IF NOT EXISTS `mydb`.`User_has_skills` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+DROP TABLE IF EXISTS `mydb`.`position` ;
 CREATE TABLE IF NOT EXISTS `mydb`.`position` (
   `userID` INT UNSIGNED NOT NULL,
-  `positionName` VARCHAR(45) NOT NULL COMMENT 'name of the position (ex: construction consultant)',
-  `company` VARCHAR(45) NOT NULL COMMENT 'that company that he/she works in',
-  PRIMARY KEY (`userID`, `positionName`),
-  UNIQUE INDEX `positionName_UNIQUE` (`positionName` ASC),
+  `positionName` TEXT NOT NULL COMMENT 'name of the position (ex: construction consultant)',
+  `company` TEXT NOT NULL COMMENT 'that company that he/she works in',
+  PRIMARY KEY (`userID`),
   CONSTRAINT `fk_position_User1`
     FOREIGN KEY (`userID`)
     REFERENCES `mydb`.`Users` (`userID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+DROP TABLE IF EXISTS `mydb`.`projectFiles` ;
 CREATE TABLE IF NOT EXISTS `mydb`.`projectFiles` (
   `projectID` INT UNSIGNED NOT NULL,
   `uploaderID` INT UNSIGNED NOT NULL COMMENT 'the id of the user who uploaded this file',
   `uploadedTime` DATETIME NOT NULL COMMENT 'date on which the file was uploaded',
-  `URL` VARCHAR(45) NULL COMMENT 'url of the file (used it if someone wants to download the file)',
-  `descreption` VARCHAR(45) NULL COMMENT 'a brief description of the file',
+  `URL` TEXT NULL COMMENT 'url of the file (used it if someone wants to download the file)',
+  `descreption` TEXT NULL COMMENT 'a brief description of the file',
   PRIMARY KEY (`projectID`),
   CONSTRAINT `releated to project`
     FOREIGN KEY (`projectID`)
@@ -193,34 +210,34 @@ CREATE TABLE IF NOT EXISTS `mydb`.`projectFiles` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+DROP TABLE IF EXISTS `mydb`.`header_user_user` ;
 CREATE TABLE IF NOT EXISTS `mydb`.`header_user_user` (
   `header_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `user1_id` INT UNSIGNED NOT NULL,
   `user2_id` INT UNSIGNED NOT NULL,
   `timeCreated` DATETIME NOT NULL,
   PRIMARY KEY (`header_id`, `user1_id`, `user2_id`),
-  INDEX `fk_messages_sender_idx` (`user1_id` ASC, `user2_id` ASC),
-  UNIQUE INDEX `reciverID_UNIQUE` (`user2_id` ASC),
-  UNIQUE INDEX `timeSent_UNIQUE` (`timeCreated` ASC),
-  UNIQUE INDEX `senderID_UNIQUE` (`user1_id` ASC),
-  UNIQUE INDEX `messageID_UNIQUE` (`header_id` ASC),
-  CONSTRAINT `fk_messages_users`
+  INDEX `fk_messages_users_idx` (`user1_id` ASC),
+  INDEX `fk_messages_user2_idx` (`user2_id` ASC),
+  CONSTRAINT `fk_messages_user1`
     FOREIGN KEY (`user1_id`)
     REFERENCES `mydb`.`Users` (`userID`)
     ON DELETE CASCADE
-	ON UPDATE NO ACTION,
-  CONSTRAINT `fk_messages_users2`
-	FOREIGN KEY (`user2_id`)
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_messages_user2`
+    FOREIGN KEY (`user2_id`)
     REFERENCES `mydb`.`Users` (`userID`)
-    ON DELETE CASCADE
+    ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+DROP TABLE IF EXISTS `mydb`.`group/header` ;
 CREATE TABLE IF NOT EXISTS `mydb`.`group/header` (
-  `groupID` INT UNSIGNED NOT NULL,
-  `groupName` VARCHAR(45) NOT NULL DEFAULT 'Group' COMMENT 'name of the group',
+  `groupID` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `groupName` TEXT NOT NULL COMMENT 'name of the group',
   `timeCreated` DATETIME NOT NULL,
   PRIMARY KEY (`groupID`))
 ENGINE = InnoDB;
+DROP TABLE IF EXISTS `mydb`.`User_has(in)_group` ;
 CREATE TABLE IF NOT EXISTS `mydb`.`User_has(in)_group` (
   `User_userID` INT UNSIGNED NOT NULL,
   `group_groupID` INT UNSIGNED NOT NULL,
@@ -238,8 +255,9 @@ CREATE TABLE IF NOT EXISTS `mydb`.`User_has(in)_group` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+DROP TABLE IF EXISTS `mydb`.`Notification_header` ;
 CREATE TABLE IF NOT EXISTS `mydb`.`Notification_header` (
-  `header_id` INT UNSIGNED NOT NULL,
+  `header_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `to_userID` INT UNSIGNED NOT NULL COMMENT 'notification of user whose id is\n\n-- each user has a header that contains all of his/hers notifications',
   `time_created` DATETIME NULL,
   PRIMARY KEY (`header_id`, `to_userID`),
@@ -252,12 +270,13 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Notification_header` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+DROP TABLE IF EXISTS `mydb`.`posts` ;
 CREATE TABLE IF NOT EXISTS `mydb`.`posts` (
-  `postID` INT UNSIGNED NOT NULL,
+  `postID` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `userID` INT UNSIGNED NOT NULL COMMENT 'the OP (original poster)',
-  `post` VARCHAR(1000) NULL COMMENT 'the post itself',
+  `post` TEXT NULL COMMENT 'the post itself',
   `tag` INT UNSIGNED NULL COMMENT '#tages that might be in the post',
-  `description` VARCHAR(45) NULL COMMENT 'no clue what this is, ask Mahmoud Shaheen (back end team leader)',
+  `description` TEXT NULL COMMENT 'no clue what this is, ask Mahmoud Shaheen (back end team leader)',
   `time` DATETIME NOT NULL COMMENT 'time on which the post was posted',
   PRIMARY KEY (`postID`, `userID`),
   INDEX `fk_posts_User1_idx` (`userID` ASC),
@@ -267,24 +286,27 @@ CREATE TABLE IF NOT EXISTS `mydb`.`posts` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+DROP TABLE IF EXISTS `mydb`.`Comments` ;
 CREATE TABLE IF NOT EXISTS `mydb`.`Comments` (
   `postID` INT UNSIGNED NOT NULL,
-  `userID` INT UNSIGNED NOT NULL COMMENT 'user who made the comment\n',
   `time` DATETIME NOT NULL COMMENT 'time on which the comment was posted',
-  `comment` VARCHAR(45) NULL COMMENT 'the comment itself\n',
+  `userID` INT NOT NULL COMMENT 'user who made the comment\n',
+  `comment` TEXT NULL COMMENT 'the comment itself\n',
   INDEX `post_idx` (`postID` ASC),
-  PRIMARY KEY (`postID`, `userID`),
+  PRIMARY KEY (`postID`, `time`, `userID`),
   CONSTRAINT `post`
     FOREIGN KEY (`postID`)
     REFERENCES `mydb`.`posts` (`postID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+DROP TABLE IF EXISTS `mydb`.`tags` ;
 CREATE TABLE IF NOT EXISTS `mydb`.`tags` (
-  `tagID` INT UNSIGNED NOT NULL,
+  `tagID` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `tag` VARCHAR(45) NOT NULL COMMENT 'the tag itself',
   PRIMARY KEY (`tagID`))
 ENGINE = InnoDB;
+DROP TABLE IF EXISTS `mydb`.`borrows` ;
 CREATE TABLE IF NOT EXISTS `mydb`.`borrows` (
   `userID` INT UNSIGNED NOT NULL COMMENT 'borrower\n',
   `device/comp` INT UNSIGNED NOT NULL,
@@ -301,8 +323,9 @@ CREATE TABLE IF NOT EXISTS `mydb`.`borrows` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+DROP TABLE IF EXISTS `mydb`.`messages_user_group` ;
 CREATE TABLE IF NOT EXISTS `mydb`.`messages_user_group` (
-  `message_id` INT UNSIGNED NOT NULL,
+  `message_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `group_id` INT UNSIGNED NOT NULL COMMENT 'id of the reciver (group)',
   `sender_id` INT UNSIGNED NOT NULL COMMENT 'id of the sender (user)',
   `message` TEXT NULL COMMENT 'message itself',
@@ -321,6 +344,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`messages_user_group` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+DROP TABLE IF EXISTS `mydb`.`student_has_Projects` ;
 CREATE TABLE IF NOT EXISTS `mydb`.`student_has_Projects` (
   `User_userID` INT UNSIGNED NOT NULL,
   `Projects_idProjects` INT UNSIGNED NOT NULL,
@@ -338,6 +362,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`student_has_Projects` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+DROP TABLE IF EXISTS `mydb`.`Projects_has_tags` ;
 CREATE TABLE IF NOT EXISTS `mydb`.`Projects_has_tags` (
   `Projects_idProjects` INT UNSIGNED NOT NULL,
   `tags_tagID` INT UNSIGNED NOT NULL,
@@ -355,6 +380,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Projects_has_tags` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+DROP TABLE IF EXISTS `mydb`.`posts_has_tags` ;
 CREATE TABLE IF NOT EXISTS `mydb`.`posts_has_tags` (
   `posts_postID` INT UNSIGNED NOT NULL,
   `tags_tagID` INT UNSIGNED NOT NULL,
@@ -372,9 +398,10 @@ CREATE TABLE IF NOT EXISTS `mydb`.`posts_has_tags` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+DROP TABLE IF EXISTS `mydb`.`emails` ;
 CREATE TABLE IF NOT EXISTS `mydb`.`emails` (
   `user_id` INT UNSIGNED NOT NULL COMMENT 'id of owner',
-  `email` VARCHAR(45) NOT NULL COMMENT 'email itself',
+  `email` TEXT NOT NULL COMMENT 'email itself',
   PRIMARY KEY (`user_id`),
   CONSTRAINT `fk_emails_User1`
     FOREIGN KEY (`user_id`)
@@ -382,6 +409,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`emails` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+DROP TABLE IF EXISTS `mydb`.`phone_numbers` ;
 CREATE TABLE IF NOT EXISTS `mydb`.`phone_numbers` (
   `user_id` INT UNSIGNED NOT NULL COMMENT 'id of user who has this phone number',
   `phone_number` VARCHAR(11) NOT NULL COMMENT 'phone number itself',
@@ -393,20 +421,22 @@ CREATE TABLE IF NOT EXISTS `mydb`.`phone_numbers` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+DROP TABLE IF EXISTS `mydb`.`messages_user_user` ;
 CREATE TABLE IF NOT EXISTS `mydb`.`messages_user_user` (
+  `message_id` INT NOT NULL AUTO_INCREMENT,
   `_header_id` INT UNSIGNED NOT NULL COMMENT 'this message belongs to header ..',
-  `message_id` INT NOT NULL,
   `owner` BIT NULL COMMENT 'owner is user1(bit = 0)\nowner is user2(bit = 1)',
   `is_read` BIT NULL COMMENT 'if message not read (0)\nif message read (1)',
   `message` TEXT NULL,
   `timeSent` DATETIME NULL,
-  PRIMARY KEY (`_header_id`, `message_id`),
+  PRIMARY KEY (`message_id`, `_header_id`),
   CONSTRAINT `header_id_header_id_message`
     FOREIGN KEY (`_header_id`)
     REFERENCES `mydb`.`header_user_user` (`header_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+DROP TABLE IF EXISTS `mydb`.`Notification` ;
 CREATE TABLE IF NOT EXISTS `mydb`.`Notification` (
   `_header_id` INT UNSIGNED NOT NULL COMMENT 'this notification belongs to header ..',
   `notification_id` INT UNSIGNED NOT NULL,
