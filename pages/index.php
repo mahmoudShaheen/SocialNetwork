@@ -34,7 +34,7 @@
 	//get post from db
 	require_once("../includes/social_functions.php"); 
 	
-	$post = get_all_post($page_number);
+	$post = get_all_posts($page_number);
 	
 	while( $post_row = mysqli_fetch_assoc($post)) {
 		//get post owner data

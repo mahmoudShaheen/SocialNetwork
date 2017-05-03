@@ -228,11 +228,11 @@
         global $connection;
 		$offset = $page_number * 10;
 		$query = "SELECT * FROM posts ";
-		$query .="LIMIT 10 ";
 		if($offset != 0){
 			$query .="OFFSET ? ";
 		}
-		$query .= "ORDER BY time DESC";
+		$query .= "ORDER BY time DESC ";
+		$query .="LIMIT 10 ";
 		$get_posts_stmt =  mysqli_prepare($connection, $query);
 		if($offset != 0){
 			mysqli_stmt_bind_param($get_posts_stmt, "i", $offset);
