@@ -21,17 +21,17 @@
 	//get user id
 	$user_id = $_SESSION['user_id'];
 	//get notifications from db
-	$query = "SELECT * FROM Notification WHERE to_userID = ? "
-	$query .= "ORDER BY time_created DESC LIMIT 50"
+	$query = "SELECT * FROM Notification WHERE to_userID = ? ";
+	$query .= "ORDER BY time_created DESC LIMIT 50";
 	$get_notifications_stmt =  mysqli_prepare($connection, $query);
 	mysqli_stmt_bind_param($get_notifications_stmt, "i", $user_id);
 	mysqli_stmt_execute($get_notifications_stmt);
 	$result_set = mysqli_stmt_get_result($get_notifications_stmt);
 	mysqli_stmt_close($get_notifications_stmt);
 
-	$query = "UPDATE Notification SET read = 1 WHERE notification_id = ?"
+	$query = "UPDATE Notification SET read = 1 WHERE notification_id = ?";
 	$set_read_stmt = mysqli_prepare($connection, $query);
-	for ( $row = mysqli_fetch_assoc($result)) {
+	while ( $row = mysqli_fetch_assoc($result)) {
 		echo htmlentities($row["time_created"]);
 		echo htmlentities($row["payload"]);
 		echo htmlentities($row["redirection_url"]); //to redirect user on click

@@ -46,13 +46,13 @@
 		
 		//get post tags
 		$post_tags = get_post_tags($post_id);
-		for( $post_tag_row = mysqli_fetch_assoc($post_tags)) {
+		while( $post_tag_row = mysqli_fetch_assoc($post_tags)) {
 			echo htmlentities($post_tag_row["tag"]);
 		}
 		
 		//get post comments
 		$post_comment = get_post_comments($post_row["postID"]);
-		 for( $post_comment_row = mysqli_fetch_assoc($post_comment)) {
+		 while( $post_comment_row = mysqli_fetch_assoc($post_comment)) {
 			 //get comment owner data
 			$comment_user = get_user_data($post_comment_row["userID"]);
 			 if( $comment_user_row = mysqli_fetch_assoc($comment_user)) {
