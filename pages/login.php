@@ -20,10 +20,10 @@
 
 		// perform validations on the form data
 		$required_fields = array('username', 'password');
-		$errors = array_merge($errors, check_required_fields($required_fields, $_POST));
+		$errors = array_merge($errors, check_required_fields($required_fields));
 
 		$fields_with_lengths = array('username' => 30, 'password' => 30);
-		$errors = array_merge($errors, check_max_field_lengths($fields_with_lengths, $_POST));
+		$errors = array_merge($errors, check_max_field_lengths($fields_with_lengths));
 
 		$username = trim(mysql_prep($_POST['username']));
 		$password = trim(mysql_prep($_POST['password']));
