@@ -1,9 +1,9 @@
-<?php require_once("../includes/session.php"); ?>
+<?php require_once("../../includes/session.php"); ?>
 <?php 
-	require_once("../includes/db_connection.php");
+	require_once("../../includes/db_connection.php");
 	global $connection;
 ?>
-<?php require_once("../includes/functions.php"); ?>
+<?php require_once("../../includes/functions.php"); ?>
 
 <?php 
 	
@@ -12,7 +12,7 @@
 	}
 	
 	
-	include_once("../includes/form_functions.php");
+	include_once("../../includes/form_functions.php");
 	
 	// START FORM PROCESSING
 	if (isset($_POST['submit'])) { // Form has been submitted.
@@ -86,7 +86,7 @@
 		$password = "";
 	}
 ?>
-<?php include("../includes/header.php"); ?>
+<?php include("../../includes/header.php"); ?>
 <table id="structure">
 	<tr>
 		<td id="page">
@@ -111,4 +111,4 @@
 		</td>
 	</tr>
 </table>
-<?php include("../includes/footer.php"); ?>
+<?php include("../../includes/footer.php"); ?>

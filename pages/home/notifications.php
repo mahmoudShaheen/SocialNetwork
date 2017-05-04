@@ -1,19 +1,19 @@
 <?php 
 	//check if user logged in
 	//if not redirect to login page
-	require_once("../includes/session.php"); 
+	require_once("../../includes/session.php"); 
 	confirm_logged_in(); 
 ?>
 
 <?php 
 	//database connection
-	require_once("../includes/db_connection.php");
+	require_once("../../includes/db_connection.php");
 	global $connection;
 ?>
 
 <?php
 	//html header
-	include("../includes/header.php"); 
+	include("../../includes/header.php"); 
 ?>
 
 
@@ -45,5 +45,5 @@
 
 <?php 
 	//html footer + close database connection if any
-	include("../includes/footer.php"); 
+	include("../../includes/footer.php"); 
 ?>

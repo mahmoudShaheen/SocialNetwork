@@ -1,13 +1,13 @@
 <?php 
 	//check if user logged in
 	//if not redirect to login page
-	require_once("../includes/session.php"); 
+	require_once("../../includes/session.php"); 
 	confirm_logged_in(); 
 ?>
 
 <?php
 	//html header
-	include("../includes/header.php"); 
+	include("../../includes/header.php"); 
 ?>
 
 <?php
@@ -22,7 +22,7 @@
 
 <?php
 	//get post from db
-	require_once("../includes/social_functions.php"); 
+	require_once("../../includes/social_functions.php"); 
 	
 	$post = get_post_data($post_id);
 	
@@ -74,5 +74,5 @@
 
 <?php 
 	//html footer + close database connection if any
-	include("../includes/footer.php"); 
+	include("../../includes/footer.php"); 
 ?>
