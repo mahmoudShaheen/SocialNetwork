@@ -15,7 +15,7 @@
 	//html header
 	include("../../includes/header.php"); 
 ?>
-
+<?php include("../../includes/sidebar.php"); ?>
 
 <?php
 	//get user id

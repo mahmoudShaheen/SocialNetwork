@@ -9,6 +9,8 @@
 <?php
 	confirm_logged_in();
 ?>
+<?php include("../../includes/header.php") ?>
+<?php include("../../includes/sidebar.php"); ?>
 
 <?php
 
@@ -23,3 +25,4 @@
     }
 
  ?>
+<?php include("../../includes/footer.php") ?>

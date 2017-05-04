@@ -9,6 +9,8 @@
 <?php
 	confirm_logged_in();
 ?>
+<?php include("../../includes/header.php") ?>
+<?php include("../../includes/sidebar.php"); ?>
 
 <?php
 
@@ -31,3 +33,4 @@
         echo htmlentities($one_research[2]);        // Idea entry
     }
 ?>
+<?php include("../../includes/footer.php") ?>

@@ -7,6 +7,7 @@
 //page to add ref. to other administrator pages.
 ?>
 <?php include("../../includes/header_admin.php"); ?>
+<?php include("../../includes/sidebar_admin.php"); ?>
 <ul>
 <li><a href="add_admin.php">Add Admin</a></li>
 <li><a href="add_user.php">Add User</a></li>

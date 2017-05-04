@@ -9,6 +9,7 @@
 	//html header
 	include("../../includes/header.php"); 
 ?>
+<?php include("../../includes/sidebar.php"); ?>
 
 <?php
 	//get post id from query string

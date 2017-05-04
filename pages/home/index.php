@@ -9,6 +9,7 @@
 	//html header
 	include("../../includes/header.php"); 
 ?>
+<?php include("../../includes/sidebar.php"); ?>
 
 <?php
 	//if user tries to enter admin area

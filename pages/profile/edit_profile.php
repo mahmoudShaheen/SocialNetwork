@@ -69,6 +69,7 @@
 	}
 ?>
 <?php include("../../includes/header.php"); ?>
+<?php include("../../includes/sidebar.php"); ?>
 <table id="structure">
 	<tr>
 		<td id="page">

@@ -12,6 +12,10 @@
 	//html header
 	include("../../includes/header.php"); 
 ?>
+<?php
+	//html sidebar
+	include("../../includes/sidebar.php");
+?>
 
 <?php
 	//get user id from query string if no query string logged in user profile is shown

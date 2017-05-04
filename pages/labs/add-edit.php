@@ -14,7 +14,9 @@
 	confirm_logged_in();
 ?>
 
-<?php require_once("../../includes/header.php") ?>
+<?php include("../../includes/header.php") ?>
+<?php include("../../includes/sidebar.php"); ?>
+
 <?php
 	include_once("../../includes/form_functions.php");
 
@@ -39,7 +41,7 @@
 	}
 
  ?>
- <?php require_once("../../includes/footer.php") ?>
+ <?php include("../../includes/footer.php") ?>
 
 <?php
 

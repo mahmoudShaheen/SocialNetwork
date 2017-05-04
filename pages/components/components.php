@@ -9,7 +9,8 @@
 <?php
 	confirm_logged_in();
 ?>
-
+<?php include("../../includes/header.php") ?>
+<?php include("../../includes/sidebar.php"); ?>
 <?php
 
     $all_components = read_all_labs($read_all_components_stmt);
@@ -24,3 +25,4 @@
     }
 
  ?>
+<?php include("../../includes/footer.php") ?>
