@@ -124,7 +124,7 @@ function  get_course_by_id ($cid){
   */
 function insert_project ($supervisor, $idea, $name, $abstract=NULL, $pic=NULL, $st_date, $end_date=NULL, $tag){
     global $connection;
-    $project_ins= $connection->prepare("INSERT INTO `projects` (`Supervisor`, `Idea`, `name`, `abstract`, `Picture_URL`, `dateStarted`, `dateEnded`, `tag`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+    $project_ins= $connection->prepare("INSERT INTO `Projects` (`Supervisor`, `Idea`, `name`, `abstract`, `Picture_URL`, `dateStarted`, `dateEnded`, `tag`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
     $project_ins->bind_param("issssssi", $supervisor, $idea, $name, $abstract, $pic, $st_date, $end_date, $tag);
     if($project_ins->execute()){
         $project_ins->close();
@@ -148,7 +148,7 @@ function insert_project ($supervisor, $idea, $name, $abstract=NULL, $pic=NULL, $
  */
 function update_project ($pid, $supervisor, $idea, $name, $abstract=NULL, $pic=NULL, $st_date, $end_date=NULL, $tag){
     global $connection;
-    $project_update=  $connection->prepare("UPDATE `projects` SET `Supervisor`=? `Idea`=?, `name`=?, `abstract`=?, `picture`=?, `dateStarted`, `dateEnded`, `tag` WHERE `idProjects`=?");
+    $project_update=  $connection->prepare("UPDATE `Projects` SET `Supervisor`=?, `Idea`=?, `name`=?, `abstract`=?, `Picture_URL`=?, `dateStarted`=?, `dateEnded`=?, `tag`=? WHERE `idProjects`=?");
     $project_update->bind_param("issssssii", $supervisor, $idea, $name, $abstract, $pic, $st_date, $end_date, $tag, $pid);
     if($project_update->execute()){
         $project_update->close();
@@ -163,7 +163,7 @@ function update_project ($pid, $supervisor, $idea, $name, $abstract=NULL, $pic=N
  */
 function delete_project ($pid){
     global $connection;
-    $project_delete= $connection->prepare("DELETE FROM `projects` WHERE `idProjects`=?");
+    $project_delete= $connection->prepare("DELETE FROM `Projects` WHERE `idProjects`=?");
     $project_delete->bind_param("i", $pid);
     if($project_delete->execute()){
         $project_delete->close();
@@ -178,7 +178,7 @@ function delete_project ($pid){
 function get_projects (){
     global $connection;
     $rows = array();
-    $query = "SELECT * FROM `projects`";
+    $query = "SELECT * FROM `Projects`";
     $result = mysqli_query($connection, $query);
     if (mysqli_num_rows($result) > 0)
         while ($row = mysqli_fetch_assoc($result)){
@@ -195,7 +195,7 @@ function get_projects (){
 function  get_project_by_id ($pid){
     $pid= intval($pid);
     global $connection;
-    $query = "SELECT * FROM `projects` WHERE `idProjects` = ?";
+    $query = "SELECT * FROM `Projects` WHERE `idProjects` = ?";
 	$stmt = mysqli_prepare($connection, $query);
 	mysqli_stmt_bind_param($stmt, "s", $pid);
 	if (mysqli_stmt_execute($stmt)) {
