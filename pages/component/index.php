@@ -21,7 +21,7 @@
 ?>
 <?php
 
-    $all_components = read_all_labs($read_all_components_stmt);
+    $all_components = read_all_components($read_all_components_stmt);
 
     while ($one_component = $all_components->fetch_array(MYSQLI_NUM)) {
         echo htmlentities($one_component[1]);        // Name entry

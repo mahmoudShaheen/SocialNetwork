@@ -54,14 +54,4 @@
 		return $user_research_id;
 	}
 
-	/****************************************************************************/
-
-	function read_user_by_id($read_user_stmt) {
-		$read_user_stmt->execute();
-
-		$user_data = $read_user_stmt->get_result();
-
-		return $user_data;
-	}
-
 ?>
