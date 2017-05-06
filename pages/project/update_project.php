@@ -142,4 +142,18 @@ if (isset($_POST['submit'])) { // Form has been submitted.
 		</td>
 	</tr>
 </table>
+
+<form action="upload_image.php<?php echo "?id=" . $id ?>" method="post" enctype="multipart/form-data">
+    Select image to upload:
+    <input type="file" name="fileToUpload" id="fileToUpload">
+    <input type="submit" value="Upload Image" name="submit">
+</form>
+
+<form action="upload_file.php<?php echo "?id=" . $id ?>" method="post" enctype="multipart/form-data">
+    Select file to upload:
+    <input type="file" name="fileToUpload" id="fileToUpload">
+	Description:
+	<input type="text" name="desc" maxlength="1000" value="" />
+    <input type="submit" value="Upload File" name="submit">
+</form>
 <?php include("../../includes/footer_admin.php"); ?>

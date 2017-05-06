@@ -217,10 +217,10 @@ function  get_project_by_id ($pid){
  * @param string $desc
  * @return boolean
  */
-function insert_pfile ($uploader_id, $upload_time, $url, $desc){
+function insert_pfile ($project_id, $uploader_id, $upload_time, $url, $desc){
     global $connection;
-    $pfile_ins= $connection->prepare("INSERT INTO `project_file` (`user_id`, `upload_time`, `url`, `descreption`) VALUES (?, ?, ?, ?)");
-    $pfile_ins->bind_param("isss", $uploader_id, $upload_time, $url, $desc);
+    $pfile_ins= $connection->prepare("INSERT INTO `project_file` (`project_id`, `user_id`, `upload_time`, `url`, `descreption`) VALUES (?, ?, ?, ?, ?)");
+    $pfile_ins->bind_param("iisss", $project_id, $uploader_id, $upload_time, $url, $desc);
     if($pfile_ins->execute()){
         $pfile_ins->close();
         return TRUE;
