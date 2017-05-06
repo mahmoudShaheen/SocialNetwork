@@ -45,50 +45,32 @@ if (isset($_GET['id']) && (int) $_GET['id'] > 0) {//id of the selected course to
 		include("../../includes/sidebar.php");
 	}
 ?>
-<table id="structure">
-	<tr>
-		<td id="page">
-			<h2>View Courses</h2>
-			<?php if (!empty($message)) {echo "<p class=\"message\">" . $message . "</p>";} ?>
-			<?php if (!empty($errors)) { display_errors($errors); } ?>
-			<form action="view_course.php" method="post">
-			<table>
-            <?php
-            if (isset($course)){
-				echo "<tr>
-					      <td>Name:</td>
-					      <td>{$course['Name']}</td>
-					      <td>About:</td>
-					      <td>{$course['about']}</td>
-					      <td>Department:</td>
-					      <td>{$course['department']}</td>
-					      <td>Grading Schema:</td>
-					      <td>{$course['Grading Schema']}</td>
-					      <td><a href=\"update_course.php?id={$id}\" class=\"button\">Update</a></td>
-					      <td><a href=\"delete_course.php?id={$id}\" class=\"button\">Delete</a></td>
-				      </tr>";
-            } elseif (isset($courses)) {
-                while ($course = array_shift($courses)) {
-                    echo "<tr>
-					          <td>Name:</td>
-					          <td>{$course['Name']}</td>
-					          <td>About:</td>
-					          <td>{$course['about']}</td>
-					          <td>Department:</td>
-					          <td>{$course['department']}</td>
-					          <td>Grading Schema:</td>
-					          <td>{$course['Grading Schema']}</td>
-					      	  <td><a href=\"update_course.php?id={$course['idCourses']}\" class=\"button\">Update</a></td>
-					      	  <td><a href=\"delete_course.php?id={$course['idCourses']}\" class=\"button\">Delete</a></td>
-				          </tr>";
-                }
-            }
-            ?>
-			</table>
-			</form>
-		</td>
-	</tr>
-</table>
+<?php if (!empty($message)) {echo "<p class=\"message\">" . $message . "</p>";} ?>
+<?php if (!empty($errors)) { display_errors($errors); } ?>
+<?php
+if (isset($course)){
+  echo {$course['name']};
+  echo {$course['about']};
+  echo {$course['department']};
+  echo {$course['grading']};
+  if(admin_check()){
+	  echo "<a href=\"update_course.php?id={$id}\"" ;
+	  echo "<a href=\"delete_course.php?id={$id}\"" ;
+  }
+} elseif (isset($courses)) {
+	while ($course = array_shift($courses)) {
+	   echo {$course['name']};
+	  echo {$course['about']};
+	  echo {$course['department']};
+	  echo {$course['grading']};
+	  if(admin_check()){
+		  echo "<a href=\"update_course.php?id={$id}\"" ;
+		  echo "<a href=\"delete_course.php?id={$id}\"" ;
+	  }
+	}
+}
+?>
+
 <?php
 	if(admin_check()){ //user is admin
 		include("../../includes/footer_admin.php");

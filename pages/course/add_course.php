@@ -41,7 +41,7 @@ if (isset($_POST['submit'])) { // Form has been submitted.
 	$grading_schema = trim(mysql_prep($_POST['grading_schema']));
 
 	if ( empty($errors) ) {//check if course already exist
-		$query = "SELECT `idCourses` FROM `Courses` WHERE `Name` = ?";
+		$query = "SELECT `course_id` FROM `course` WHERE `name` = ?";
 		$check_course_stmt = mysqli_prepare($connection, $query);
 		mysqli_stmt_bind_param($check_course_stmt, "s", $name);
 		mysqli_stmt_execute($check_course_stmt);
