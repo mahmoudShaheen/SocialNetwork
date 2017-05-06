@@ -34,7 +34,7 @@ if (isset($_GET['id']) && (int) $_GET['id'] > 0) {//id of the selected project t
 	}
 }
 ?>
-<?php include("../../includes/header_admin.php"); ?>
+<?php include("../../includes/header.php"); ?>
 <?php include("../../includes/sidebar.php"); ?>
 <table id="structure">
 	<tr>
