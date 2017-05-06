@@ -34,18 +34,18 @@
 	
 	//redirects user to login page
 	function login_redirect(){
-		redirect_to("login.php");
+		redirect_to("../home/login.php");
 	}
 	
 	//redirects user to login page
 	function log_out_redirect(){
-		redirect_to("login.php?logout=1");
+		redirect_to("../home/login.php?logout=1");
 	}
 	
 	//redirect to home if normal user tries to enter admin area
 	//and also show a message permission denied
 	function not_admin_redirect(){
-		redirect_to("index.php?permission=1");
+		redirect_to("../home/index.php?permission=1");
 	}
 	
 	//function to log out user

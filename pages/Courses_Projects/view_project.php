@@ -12,7 +12,7 @@
  * @param integer id    id of the project to be viewed, may be null to view all projects
  */
 
-require_once ("CoursesProjectsModel.php");
+require_once ("../../includes/courses_projects_model.php");
 require_once ("../../includes/session.php");
 require_once("../../includes/db_connection.php");
 require_once("../../includes/functions.php");

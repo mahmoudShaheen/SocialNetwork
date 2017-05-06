@@ -15,7 +15,7 @@
  * @param string grading_schema    grading_schema of the course to be added
  */
 
-require_once ("CoursesProjectsModel.php");
+require_once ("../../includes/courses_projects_model.php");
 require_once ("../../includes/session.php");
 require_once("../../includes/db_connection.php");
 require_once("../../includes/functions.php");
