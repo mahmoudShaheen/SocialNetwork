@@ -47,4 +47,4 @@ if (isset($_GET['id']) && (int) $_GET['id'] > 0) {//id of the selected course to
 		</td>
 	</tr>
 </table>
-<?php include("../../includes/footer.php"); ?>
+<?php include("../../includes/footer_admin.php"); ?>

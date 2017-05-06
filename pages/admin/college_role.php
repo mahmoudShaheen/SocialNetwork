@@ -93,4 +93,4 @@
 		</td>
 	</tr>
 </table>
-<?php include("../../includes/footer.php"); ?>
+<?php include("../../includes/footer_admin.php"); ?>

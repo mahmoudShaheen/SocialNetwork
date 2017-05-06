@@ -129,4 +129,4 @@ if (isset($_POST['submit'])) { // Form has been submitted.
 		</td>
 	</tr>
 </table>
-<?php include("../../includes/footer.php"); ?>
+<?php include("../../includes/footer_admin.php"); ?>

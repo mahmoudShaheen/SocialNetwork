@@ -42,7 +42,7 @@
 		form_validate();
 	}
 ?>
-<?php include("../../includes/footer.php") ?>
+<?php include("../../includes/footer_admin.php") ?>
 
 <?php
 

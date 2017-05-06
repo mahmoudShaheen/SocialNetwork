@@ -14,4 +14,4 @@
 <li><a href="change_password.php">Change Password</a></li>
 <li><a href="college_role.php">Change Collge Role</a></li>
 <ul>
-<?php include("../../includes/footer.php"); ?>
+<?php include("../../includes/footer_admin.php"); ?>

@@ -32,4 +32,10 @@
     }
 
  ?>
-<?php include("../../includes/footer.php") ?>
+<?php
+	if(admin_check()){ //user is admin
+		include("../../includes/footer_admin.php");
+	}else{ //normal user
+		include("../../includes/footer.php");
+	}
+?>
