@@ -19,9 +19,9 @@
 		}
 		
 		$logged_user_id = $_SESSION['user_id'];
-		$query = "SELECT userID ";
-		$query .= "FROM comments ";
-		$query .= "WHERE commentID = ? ";
+		$query = "SELECT user_id ";
+		$query .= "FROM comment ";
+		$query .= "WHERE comment_id = ? ";
 		
 		$check_owner_stmt =  mysqli_prepare($connection, $query);
 		mysqli_stmt_bind_param($check_owner_stmt, "i", $comment_id);
@@ -29,7 +29,7 @@
 		$result_set = mysqli_stmt_get_result($check_owner_stmt);
 		mysqli_stmt_close($check_owner_stmt);
 		$result_set = mysqli_fetch_array($result_set, MYSQLI_ASSOC);
-		$user_id = $result_set["userID"];
+		$user_id = $result_set["user_id"];
 		if($user_id != $logged_user_id){ //if the logged user isn't the owner of the comment 
 			echo "[[Permission Denied!]]";
 			exit;
@@ -47,7 +47,7 @@
 
 <?php
 	//check if user already exist
-	$query = "SELECT commentID FROM comments WHERE commentID = ?";
+	$query = "SELECT comment_id FROM comment WHERE comment_id = ?";
 	
 	$check_comment_stmt = mysqli_prepare($connection, $query);
 	mysqli_stmt_bind_param($check_comment_stmt, "i", $comment_id);
@@ -60,8 +60,8 @@
 		exit;
 	} else {//comment exists
 		// Delete comment
-		$query = "DELETE FROM comments ";
-		$query .= "WHERE commentID = ? ";
+		$query = "DELETE FROM comment ";
+		$query .= "WHERE comment_id = ? ";
 		$query .= "LIMIT 1";
 		
 		$delete_stmt =  mysqli_prepare($connection, $query);

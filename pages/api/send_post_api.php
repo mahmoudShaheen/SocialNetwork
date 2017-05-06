@@ -30,7 +30,7 @@
 	}
 	
 	// add post
-	$query = "INSERT INTO posts (userID, post, time) VALUES (?, ?, ?)";
+	$query = "INSERT INTO post (user_id, post, time) VALUES (?, ?, ?)";
 	$post_stmt =  mysqli_prepare($connection, $query);
 	mysqli_stmt_bind_param($post_stmt, "iss", $user_id, $post, $time);
 	mysqli_stmt_execute($post_stmt);
@@ -42,11 +42,11 @@
 			//add tags
 			$post_id = mysqli_insert_id($connection);
 			//prepared statement 
-			$query = "SELECT tagID FROM tags WHERE tag = ?";
+			$query = "SELECT tag_id FROM tag WHERE tag = ?";
 			$chk_tag_stmt =  mysqli_prepare($connection, $query);
-			$query = "INSERT INTO posts_has_tags (posts_postID, tags_tagID) VALUES (?, ?)";
+			$query = "INSERT INTO post_tag (post_id, tag_id) VALUES (?, ?)";
 			$post_tag_stmt =  mysqli_prepare($connection, $query);
-			$query = "INSERT INTO tags (tag) VALUES (?)";
+			$query = "INSERT INTO tag (tag) VALUES (?)";
 			$tag_stmt =  mysqli_prepare($connection, $query);
 			
 			foreach($tags as $tag){

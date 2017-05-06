@@ -21,9 +21,9 @@
 	}
 	
 	// Search for user
-	$query = "SELECT UserName ";
+	$query = "SELECT username ";
 	$query .= "FROM users ";
-	$query .= "WHERE UserName LIKE ? ";
+	$query .= "WHERE username LIKE ? ";
 	$query .= "LIMIT 10";
 	
 	$search_stmt =  mysqli_prepare($connection, $query);
