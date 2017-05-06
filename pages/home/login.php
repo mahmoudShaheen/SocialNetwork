@@ -86,8 +86,15 @@
 		$password = "";
 	}
 ?>
-<?php include("../../includes/header.php"); ?>
-<?php include("../../includes/sidebar.php"); ?>
+<?php
+	if(admin_check()){ //user is admin
+		include("../../includes/header_admin.php");
+		include("../../includes/sidebar_admin.php");
+	}else{ //normal user
+		include("../../includes/header.php");
+		include("../../includes/sidebar.php");
+	}
+?>
 <table id="structure">
 	<tr>
 		<td id="page">

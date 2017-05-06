@@ -6,10 +6,14 @@
 ?>
 
 <?php
-	//html header
-	include("../../includes/header.php"); 
+	if(admin_check()){ //user is admin
+		include("../../includes/header_admin.php");
+		include("../../includes/sidebar_admin.php");
+	}else{ //normal user
+		include("../../includes/header.php");
+		include("../../includes/sidebar.php");
+	}
 ?>
-<?php include("../../includes/sidebar.php"); ?>
 
 <?php
 	//get post id from query string
