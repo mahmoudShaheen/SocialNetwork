@@ -32,7 +32,7 @@
 	}
 	
 	// add comment
-	$query = "INSERT INTO comments (postID, userID, comment, time) VALUES (?, ?, ?, ?)";
+	$query = "INSERT INTO comment (post_id, user_id, comment, time) VALUES (?, ?, ?, ?)";
 	$comment_stmt =  mysqli_prepare($connection, $query);
 	mysqli_stmt_bind_param($comment_stmt, "iiss", $post_id, $user_id, $comment, $time);
 	mysqli_stmt_execute($comment_stmt);

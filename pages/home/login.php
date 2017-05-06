@@ -31,10 +31,10 @@
 		
 		if ( empty($errors) ) {
 			// Check database to see if username and the hashed password exist there.
-			$query = "SELECT userID, UserName ";
-			$query .= "FROM users ";
-			$query .= "WHERE UserName = ? ";
-			$query .= "AND PasswordHash = ? ";
+			$query = "SELECT user_id, username ";
+			$query .= "FROM user ";
+			$query .= "WHERE username = ? ";
+			$query .= "AND password_hash = ? ";
 			$query .= "LIMIT 1";
 			
 			$login_stmt = mysqli_prepare($connection, $query);
@@ -47,14 +47,14 @@
 				// username/password authenticated
 				// and only 1 match
 				$found_user = mysqli_fetch_array($result_set);
-				$_SESSION['user_id'] = $found_user['userID'];
-				$_SESSION['username'] = $found_user['UserName'];
-				$user_id = $found_user['userID'];
+				$_SESSION['user_id'] = $found_user['user_id'];
+				$_SESSION['username'] = $found_user['username'];
+				$user_id = $found_user['user_id'];
 				
 				//check if the user is admin
-				$query = "SELECT userID ";
-				$query .= "FROM Admin ";
-				$query .= "WHERE userID = ? ";
+				$query = "SELECT user_id ";
+				$query .= "FROM admin ";
+				$query .= "WHERE user_id = ? ";
 				$query .= "LIMIT 1";
 				$admin_stmt = mysqli_prepare($connection, $query);
 				mysqli_stmt_bind_param($admin_stmt, "i", $user_id);
@@ -86,8 +86,9 @@
 		$password = "";
 	}
 ?>
-<?php include("../../includes/header.php"); ?>
-<?php include("../../includes/sidebar.php"); ?>
+<?php
+	include("../../includes/header_login.php");
+?>
 <table id="structure">
 	<tr>
 		<td id="page">
@@ -112,4 +113,4 @@
 		</td>
 	</tr>
 </table>
-<?php include("../../includes/footer.php"); ?>
+<?php include("../../includes/footer_login.php"); ?>

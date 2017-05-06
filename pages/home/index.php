@@ -6,10 +6,14 @@
 ?>
 
 <?php
-	//html header
-	include("../../includes/header.php"); 
+	if(admin_check()){ //user is admin
+		include("../../includes/header_admin.php");
+		include("../../includes/sidebar_admin.php");
+	}else{ //normal user
+		include("../../includes/header.php");
+		include("../../includes/sidebar.php");
+	}
 ?>
-<?php include("../../includes/sidebar.php"); ?>
 
 <?php
 	//if user tries to enter admin area
@@ -39,22 +43,21 @@
 	
 	while( $post_row = mysqli_fetch_assoc($post)) {
 		//get post owner data
-		 $post_user = get_user_data($post_row["userID"]);
+		 $post_user = get_user_data($post_row["user_id"]);
 		 if( $post_user_row = mysqli_fetch_assoc($post_user)) {
-			echo htmlentities($post_user_row["UserName"]);
-			echo htmlentities($post_user_row["FirstName"]);
-			echo htmlentities($post_user_row["MiddleName"]);
-			echo htmlentities($post_user_row["LastName"]);
-			echo htmlentities($post_user_row["PictureURL"]);
-			echo htmlentities($post_user_row["collegeRole"]);
+			echo htmlentities($post_user_row["username"]);
+			echo htmlentities($post_user_row["first_name"]);
+			echo htmlentities($post_user_row["middle_name"]);
+			echo htmlentities($post_user_row["last_name"]);
+			echo htmlentities($post_user_row["college_role"]);
 			
 		 }
 		 //post payload
 		echo htmlentities($post_row["time"]);
-		echo htmlentities($post_row["userID"]);
+		echo htmlentities($post_row["user_id"]);
 		echo htmlentities($post_row["post"]);
-		echo htmlentities($post_row["postID"]);
-		$post_id = $post_row["postID"];
+		echo htmlentities($post_row["post_id"]);
+		$post_id = $post_row["post_id"];
 		//get post tags
 		$post_tags = get_post_tags($post_id);
 		while( $post_tag_row = mysqli_fetch_assoc($post_tags)) {
@@ -62,17 +65,16 @@
 		}
 		
 		//get post comments
-		$post_comment = get_post_comments($post_row["postID"]);
+		$post_comment = get_post_comments($post_row["post_id"]);
 		 while( $post_comment_row = mysqli_fetch_assoc($post_comment)) {
 			 //get comment owner data
-			$comment_user = get_user_data($post_comment_row["userID"]);
+			$comment_user = get_user_data($post_comment_row["user_id"]);
 			 if( $comment_user_row = mysqli_fetch_assoc($comment_user)) {
-				echo htmlentities($comment_user_row["UserName"]);
-				echo htmlentities($comment_user_row["FirstName"]);
-				echo htmlentities($comment_user_row["MiddleName"]);
-				echo htmlentities($comment_user_row["LastName"]);
-				echo htmlentities($comment_user_row["PictureURL"]);
-				echo htmlentities($comment_user_row["collegeRole"]);
+				echo htmlentities($comment_user_row["username"]);
+				echo htmlentities($post_user_row["first_name"]);
+				echo htmlentities($post_user_row["middle_name"]);
+				echo htmlentities($post_user_row["last_name"]);
+				echo htmlentities($post_user_row["college_role"]);
 			 }
 			 //get comment time and payload
 			echo htmlentities($post_comment_row["comment"]);
@@ -81,7 +83,10 @@
 	}
 ?>
 
-<?php 
-	//html footer + close database connection if any
-	include("../../includes/footer.php"); 
+<?php
+	if(admin_check()){ //user is admin
+		include("../../includes/footer_admin.php");
+	}else{ //normal user
+		include("../../includes/footer.php");
+	}
 ?>

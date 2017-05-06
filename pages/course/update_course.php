@@ -16,7 +16,7 @@
  * @param string grading_schema    grading_schema of the course to be updated
  */
 
-require_once ("CoursesProjectsModel.php");
+require_once ("../../includes/courses_projects_model.php");
 require_once ("../../includes/session.php");
 require_once("../../includes/db_connection.php");
 require_once("../../includes/functions.php");
@@ -43,7 +43,7 @@ if (isset($_POST['submit'])) {// Form has been submitted.
 	$grading_schema = trim(mysql_prep($_POST['grading_schema']));
 
 	if ( empty($errors) ) {//check if course already exist
-		$query = "SELECT `idCourses` FROM `Courses` WHERE `Name` = ?";
+		$query = "SELECT `course_id` FROM `course` WHERE `name` = ?";
 		$check_course_stmt = mysqli_prepare($connection, $query);
 		mysqli_stmt_bind_param($check_course_stmt, "s", $name);
 		mysqli_stmt_execute($check_course_stmt);
@@ -67,10 +67,10 @@ if (isset($_POST['submit'])) {// Form has been submitted.
 		$id = (int) $_GET['id'];
 		$course = get_course_by_id ($id);
 		if (count($course) > 0) { //course is found in the database then fill the form with its data to be updated 
-            $name = $course['Name'];
+            $name = $course['name'];
             $about = $course['about'];
             $department = $course['department'];
-            $grading_schema = $course['Grading Schema'];
+            $grading_schema = $course['grading'];
 		} else { //course is not found
 			$message = "An error has been occurred, Course is not found!";
 	        $name = "";
@@ -88,6 +88,7 @@ if (isset($_POST['submit'])) {// Form has been submitted.
 }
 ?>
 <?php include("../../includes/header_admin.php"); ?>
+<?php include("../../includes/sidebar_admin.php"); ?>
 <table id="structure">
 	<tr>
 		<td id="page">
@@ -121,4 +122,4 @@ if (isset($_POST['submit'])) {// Form has been submitted.
 		</td>
 	</tr>
 </table>
-<?php include("../../includes/footer.php"); ?>
+<?php include("../../includes/footer_admin.php"); ?>

@@ -25,7 +25,7 @@
 				echo "[[Empty email!]]";
 				exit;
 			}
-			$query = "INSERT INTO emails (user_id, email) VALUES (?, ?)";
+			$query = "INSERT INTO email (user_id, email) VALUES (?, ?)";
 			$stmt =  mysqli_prepare($connection, $query);
 			mysqli_stmt_bind_param($stmt, "is", $user_id, $email);
 			break;
@@ -37,7 +37,7 @@
 				echo "[[Empty email!]]";
 				exit;
 			}
-			$query = "DELETE FROM emails WHERE user_id = ? AND email = ? LIMIT 1";
+			$query = "DELETE FROM email WHERE user_id = ? AND email = ? LIMIT 1";
 			$stmt =  mysqli_prepare($connection, $query);
 			mysqli_stmt_bind_param($stmt, "is", $user_id, $email);
 			break;
@@ -49,7 +49,7 @@
 				echo "[[Empty number!]]";
 				exit;
 			}
-			$query =  "INSERT INTO phone_numbers (user_id, phone_number) VALUES (?, ?)";
+			$query =  "INSERT INTO phone_number (user_id, phone_number) VALUES (?, ?)";
 			$stmt =  mysqli_prepare($connection, $query);
 			mysqli_stmt_bind_param($stmt, "is", $user_id, $number);
 			break;
@@ -61,7 +61,7 @@
 				echo "[[Empty number!]]";
 				exit;
 			}
-			$query = "DELETE FROM phone_numbers WHERE user_id = ? AND phone_number = ? LIMIT 1";
+			$query = "DELETE FROM phone_number WHERE user_id = ? AND phone_number = ? LIMIT 1";
 			$stmt =  mysqli_prepare($connection, $query);
 			mysqli_stmt_bind_param($stmt, "is", $user_id, $number);
 			break;
@@ -79,7 +79,7 @@
 				echo "[[Empty company!]]";
 				exit;
 			}
-			$query = "INSERT INTO position (userID, positionName, company) VALUES (?, ?, ?)";
+			$query = "INSERT INTO position (user_id, position, company) VALUES (?, ?, ?)";
 			$stmt =  mysqli_prepare($connection, $query);
 			mysqli_stmt_bind_param($stmt, "iss", $user_id, $position, $company);
 			break;
@@ -97,7 +97,7 @@
 				echo "[[Empty company!]]";
 				exit;
 			}
-			$query = "DELETE FROM position WHERE userID = ? AND positionName = ? AND company = ? LIMIT 1";
+			$query = "DELETE FROM position WHERE user_id = ? AND position = ? AND company = ? LIMIT 1";
 			$stmt =  mysqli_prepare($connection, $query);
 			mysqli_stmt_bind_param($stmt, "iss", $user_id, $position, $company);
 			break;

@@ -34,7 +34,7 @@
 		
 		if ( empty($errors) ) {
 			//add data to database
-			$query = "UPDATE Users SET FirstName = ?, MiddleName = ?, LastName = ?, about = ? WHERE userID = ?";
+			$query = "UPDATE user SET first_name = ?, middle_name = ?, last_name = ?, about = ? WHERE user_id = ?";
 			$update_profile_stmt =  mysqli_prepare($connection, $query);
 			mysqli_stmt_bind_param($update_profile_stmt, "ssssi", $first_name, $middle_name, $last_name, $about, $user_id);
 			mysqli_stmt_execute($update_profile_stmt);
@@ -54,10 +54,9 @@
 		require_once("../../includes/social_functions.php"); 
 		$user = get_user_data($user_id);
 		if( ($user_row = mysqli_fetch_assoc($user)) != null) {
-			$first_name = $user_row["FirstName"];
-			$middle_name =  $user_row["MiddleName"];
-			$last_name = $user_row["LastName"];
-			$picture_url = $user_row["PictureURL"];
+			$first_name = $user_row["first_name"];
+			$middle_name =  $user_row["middle_name"];
+			$last_name = $user_row["last_name"];
 			$about = $user_row["about"];
 		}else{
 			$first_name = "";
@@ -68,8 +67,15 @@
 		}
 	}
 ?>
-<?php include("../../includes/header.php"); ?>
-<?php include("../../includes/sidebar.php"); ?>
+<?php
+	if(admin_check()){ //user is admin
+		include("../../includes/header_admin.php");
+		include("../../includes/sidebar_admin.php");
+	}else{ //normal user
+		include("../../includes/header.php");
+		include("../../includes/sidebar.php");
+	}
+?>
 <table id="structure">
 	<tr>
 		<td id="page">
@@ -137,7 +143,13 @@
 	$positions_results = get_user_positions($user_id);
 	while( $position_row = mysqli_fetch_assoc($positions_results)) {
 		echo htmlentities($position_row["company"]);
-		echo htmlentities($position_row["positionName"]);
+		echo htmlentities($position_row["position"]);
 	}
 ?>
-<?php include("../../includes/footer.php"); ?>
+<?php
+	if(admin_check()){ //user is admin
+		include("../../includes/footer_admin.php");
+	}else{ //normal user
+		include("../../includes/footer.php");
+	}
+?>

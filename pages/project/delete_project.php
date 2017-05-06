@@ -12,7 +12,7 @@
  */
 
 
-require_once ("CoursesProjectsModel.php");
+require_once ("../../includes/courses_projects_model.php");
 require_once ("../../includes/session.php");
 require_once("../../includes/db_connection.php");
 require_once("../../includes/functions.php");
@@ -37,6 +37,7 @@ if (isset($_GET['id']) && (int) $_GET['id'] > 0) {//id of the selected project t
 ?>
 
 <?php include("../../includes/header_admin.php"); ?>
+<?php include("../../includes/sidebar_admin.php"); ?>
 <table id="structure">
 	<tr>
 		<td id="page">
@@ -46,4 +47,4 @@ if (isset($_GET['id']) && (int) $_GET['id'] > 0) {//id of the selected project t
 		</td>
 	</tr>
 </table>
-<?php include("../../includes/footer.php"); ?>
+<?php include("../../includes/footer_admin.php"); ?>

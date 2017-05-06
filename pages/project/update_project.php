@@ -19,7 +19,7 @@
  * @param integer tag       teg of the project to be updated
  */
 
-require_once ("CoursesProjectsModel.php");
+require_once ("../../includes/courses_projects_model.php");
 require_once ("../../includes/session.php");
 require_once("../../includes/db_connection.php");
 require_once("../../includes/functions.php");
@@ -33,25 +33,23 @@ global $connection;
 if (isset($_POST['submit'])) { // Form has been submitted.
 	$errors = array();
 	// perform validations on the form data
-	$required_fields = array('supervisor', 'idea', 'name', 'abstract', 'pic', 'st_date', 'end_date', 'tag');
+	$required_fields = array('supervisor', 'idea', 'name', 'abstract', 'st_date', 'end_date');
 	$errors = array_merge($errors, check_required_fields($required_fields));
-	$fields_max_lengths = array('idea' => 450, 'name' => 45, 'abstract' => 1000, 'pic' => 45);
+	$fields_max_lengths = array('idea' => 450, 'name' => 45, 'abstract' => 1000);
 	$errors = array_merge($errors, check_max_field_lengths($fields_max_lengths));
-	$fields_min_lengths = array('idea' => 10, 'name' => 3, 'abstract' => 20, 'pic' => 10, 'st_date'=> 6, 'end_date'=>6);
+	$fields_min_lengths = array('idea' => 10, 'name' => 3, 'abstract' => 20, 'st_date'=> 6, 'end_date'=>6);
 	$errors = array_merge($errors, check_min_field_lengths($fields_min_lengths));
 	$pid = trim(mysql_prep($_POST['id']));
 	$supervisor = trim(mysql_prep($_POST['supervisor']));
 	$idea = trim(mysql_prep($_POST['idea']));
 	$name = trim(mysql_prep($_POST['name']));
 	$abstract = trim(mysql_prep($_POST['abstract']));
-	$pic = trim(mysql_prep($_POST['pic']));
 	$st_date = trim(mysql_prep($_POST['st_date']));
 	$end_date = trim(mysql_prep($_POST['end_date']));
-	$tag = trim(mysql_prep($_POST['tag']));
 
 	if ( empty($errors) ) {
 		//check if course already exist
-		$query = "SELECT `idProjects` FROM `Projects` WHERE `name` = ?";
+		$query = "SELECT `project_id` FROM `project` WHERE `name` = ?";
 		$check_project_stmt = mysqli_prepare($connection, $query);
 		mysqli_stmt_bind_param($check_project_stmt, "s", $name);
 		mysqli_stmt_execute($check_project_stmt);
@@ -75,24 +73,20 @@ if (isset($_POST['submit'])) { // Form has been submitted.
 		$id = (int) $_GET['id'];
 		$project = get_project_by_id ($id);
 		if (count($project) > 0) {//project is found in the database then fill the form with its data to be updated
-            $supervisor = $project['Supervisor'];
-            $idea = $project['Idea'];
+            $supervisor = $project['supervisor'];
+            $idea = $project['idea'];
 	        $name = $project['name'];
 	        $abstract = $project['abstract'];
-	        $pic = $project['Picture_URL'];
-	        $st_date = $project['dateStarted'];
-	        $end_date = $project['dateEnded'];
-	        $tag = $project['tag'];
+	        $st_date = $project['date_started'];
+	        $end_date = $project['date_ended'];
 		} else { //project is not found
 			$message = "An error has been occurred, project is not found!";
             $supervisor = "";
             $idea = "";
 	        $name = "";
 	        $abstract = "";
-	        $pic = "";
 	        $st_date = "";
 	        $end_date = "";
-	        $tag = "";
 		}
 	} else {//wrong id
 		$message = "Invalid ID, project is not found!";
@@ -100,14 +94,13 @@ if (isset($_POST['submit'])) { // Form has been submitted.
         $idea = "";
 	    $name = "";
 	    $abstract = "";
-	    $pic = "";
 	    $st_date = "";
 	    $end_date = "";
-	    $tag = "";
 	}
 }
 ?>
 <?php include("../../includes/header_admin.php"); ?>
+<?php include("../../includes/sidebar_admin.php"); ?>
 <table id="structure">
 	<tr>
 		<td id="page">
@@ -133,20 +126,12 @@ if (isset($_POST['submit'])) { // Form has been submitted.
 					<td><textarea rows="5" cols="22" name="abstract" maxlength="1000" /><?php echo htmlentities($abstract); ?></textarea></td>
 				</tr>
 				<tr>
-					<td>Picture URL:</td>
-					<td><input type="url" name="pic" maxlength="45" value="<?php echo htmlentities($pic); ?>" /></td>
-				</tr>
-				<tr>
 					<td>Starting Date:</td>
 					<td><input type="date" name="st_date" maxlength="45" value="<?php echo htmlentities($st_date); ?>" /></td>
 				</tr>
 				<tr>
 					<td>End Date:</td>
 					<td><input type="date" name="end_date" maxlength="45" value="<?php echo htmlentities($end_date); ?>" /></td>
-				</tr>
-				<tr>
-					<td>Tag:</td>
-					<td><input type="number" name="tag" maxlength="45" value="<?php echo htmlentities($tag); ?>" /></td>
 				</tr>
 				<tr>
 					<td><input type="hidden" name="id" value="<?php echo htmlentities($id); ?>" /></td>
@@ -157,4 +142,18 @@ if (isset($_POST['submit'])) { // Form has been submitted.
 		</td>
 	</tr>
 </table>
-<?php include("../../includes/footer.php"); ?>
+
+<form action="upload_image.php<?php echo "?id=" . $id ?>" method="post" enctype="multipart/form-data">
+    Select image to upload:
+    <input type="file" name="fileToUpload" id="fileToUpload">
+    <input type="submit" value="Upload Image" name="submit">
+</form>
+
+<form action="upload_file.php<?php echo "?id=" . $id ?>" method="post" enctype="multipart/form-data">
+    Select file to upload:
+    <input type="file" name="fileToUpload" id="fileToUpload">
+	Description:
+	<input type="text" name="desc" maxlength="1000" value="" />
+    <input type="submit" value="Upload File" name="submit">
+</form>
+<?php include("../../includes/footer_admin.php"); ?>

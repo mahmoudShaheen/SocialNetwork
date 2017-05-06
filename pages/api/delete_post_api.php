@@ -19,9 +19,9 @@
 		}
 		
 		$logged_user_id = $_SESSION['user_id'];
-		$query = "SELECT userID ";
-		$query .= "FROM posts ";
-		$query .= "WHERE postID = ? ";
+		$query = "SELECT user_id ";
+		$query .= "FROM post ";
+		$query .= "WHERE post_id = ? ";
 		
 		$check_owner_stmt =  mysqli_prepare($connection, $query);
 		mysqli_stmt_bind_param($check_owner_stmt, "i", $post_id);
@@ -29,7 +29,7 @@
 		$result_set = mysqli_stmt_get_result($check_owner_stmt);
 		mysqli_stmt_close($check_owner_stmt);
 		$result = mysqli_fetch_array($result, MYSQLI_ASSOC);
-		$user_id = $result["userID"];
+		$user_id = $result["user_id"];
 		if($user_id != $logged_user_id){ //if the logged user isn't the owner of the post 
 			echo "[[Permission Denied!]]";
 			exit;
@@ -47,7 +47,7 @@
 
 <?php
 	//check if post exists
-	$query = "SELECT postID FROM posts WHERE postID = ?";
+	$query = "SELECT post_id FROM post WHERE post_id = ?";
 	
 	$check_post_stmt = mysqli_prepare($connection, $query);
 	mysqli_stmt_bind_param($check_post_stmt, "i", $post_id);
@@ -60,8 +60,8 @@
 		exit;
 	} else {//post exists
 		// Delete post
-		$query = "DELETE FROM posts ";
-		$query .= "WHERE postID = ? ";
+		$query = "DELETE FROM post ";
+		$query .= "WHERE post_id = ? ";
 		$query .= "LIMIT 1";
 		
 		$delete_stmt =  mysqli_prepare($connection, $query);
