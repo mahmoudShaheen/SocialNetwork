@@ -29,7 +29,7 @@ if ($connection->connect_error){
   */
 function insert_course ($name, $about=NULL, $dept=NULL, $grading_schema=NULL){
     global $connection;
-    $course_ins= $connection->prepare("INSERT INTO `Courses` (`Name`, `about`, `department`, `Grading Schema`) VALUES (?, ?, ?, ?)");
+    $course_ins= $connection->prepare("INSERT INTO `course` (`name`, `about`, `department`, `grading`) VALUES (?, ?, ?, ?)");
     $course_ins->bind_param("ssss", $name, $about, $dept, $grading_schema);
     if($course_ins->execute()){
         $course_ins->close();
@@ -48,7 +48,7 @@ function insert_course ($name, $about=NULL, $dept=NULL, $grading_schema=NULL){
  */
 function update_course ($cid, $name, $about=NULL, $dept=NULL, $grading_schema=NULL){
     global $connection;
-    $course_update=  $connection->prepare("UPDATE `Courses` SET `Name`=?, `about`=?, `department`=?, `Grading Schema`=? WHERE `idCourses`=?");
+    $course_update=  $connection->prepare("UPDATE `course` SET `name`=?, `about`=?, `department`=?, `grading`=? WHERE `course_id`=?");
     $course_update->bind_param("ssssi",$name, $about, $dept, $grading_schema, $cid);
     if($course_update->execute()){
         $course_update->close();
@@ -63,7 +63,7 @@ function update_course ($cid, $name, $about=NULL, $dept=NULL, $grading_schema=NU
  */
 function delete_course ($cid){
     global $connection;
-    $course_delete= $connection->prepare("DELETE FROM `Courses` WHERE `idCourses`=?");
+    $course_delete= $connection->prepare("DELETE FROM `course` WHERE `course_id`=?");
     $course_delete->bind_param("i", $cid);
     if($course_delete->execute()){
         $course_delete->close();
@@ -78,7 +78,7 @@ function delete_course ($cid){
 function get_courses (){
     global $connection;
     $rows = array();
-    $query = "SELECT * FROM `Courses`";
+    $query = "SELECT * FROM `course`";
     $result = mysqli_query($connection, $query);
     if (mysqli_num_rows($result) > 0)
         while ($row = mysqli_fetch_assoc($result)){
@@ -95,7 +95,7 @@ function get_courses (){
 function  get_course_by_id ($cid){
     $cid= intval($cid);
     global $connection;
-    $query = "SELECT * FROM `Courses` WHERE `idCourses` = ?";
+    $query = "SELECT * FROM `course` WHERE `course_id` = ?";
 	$stmt = mysqli_prepare($connection, $query);
 	mysqli_stmt_bind_param($stmt, "s", $cid);
 	if (mysqli_stmt_execute($stmt)) {
@@ -122,10 +122,10 @@ function  get_course_by_id ($cid){
   * @param integer $tag
   * @return boolean
   */
-function insert_project ($supervisor, $idea, $name, $abstract=NULL, $pic=NULL, $st_date, $end_date=NULL, $tag){
+function insert_project ($supervisor, $idea, $name, $abstract=NULL, $st_date, $end_date=NULL){
     global $connection;
-    $project_ins= $connection->prepare("INSERT INTO `Projects` (`Supervisor`, `Idea`, `name`, `abstract`, `Picture_URL`, `dateStarted`, `dateEnded`, `tag`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-    $project_ins->bind_param("issssssi", $supervisor, $idea, $name, $abstract, $pic, $st_date, $end_date, $tag);
+    $project_ins= $connection->prepare("INSERT INTO `project` (`supervisor`, `idea`, `name`, `abstract`, `date_started`, `date_ended`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+    $project_ins->bind_param("isssss", $supervisor, $idea, $name, $abstract, $st_date, $end_date);
     if($project_ins->execute()){
         $project_ins->close();
         return TRUE;
@@ -146,10 +146,10 @@ function insert_project ($supervisor, $idea, $name, $abstract=NULL, $pic=NULL, $
  * @param integer $tag
  * @return boolean
  */
-function update_project ($pid, $supervisor, $idea, $name, $abstract=NULL, $pic=NULL, $st_date, $end_date=NULL, $tag){
+function update_project ($pid, $supervisor, $idea, $name, $abstract=NULL, $st_date, $end_date=NULL){
     global $connection;
-    $project_update=  $connection->prepare("UPDATE `Projects` SET `Supervisor`=?, `Idea`=?, `name`=?, `abstract`=?, `Picture_URL`=?, `dateStarted`=?, `dateEnded`=?, `tag`=? WHERE `idProjects`=?");
-    $project_update->bind_param("issssssii", $supervisor, $idea, $name, $abstract, $pic, $st_date, $end_date, $tag, $pid);
+    $project_update=  $connection->prepare("UPDATE `project` SET `supervisor`=?, `idea`=?, `name`=?, `abstract`=?, `dateStarted`=?, `dateEnded`=? WHERE `project_id`=?");
+    $project_update->bind_param("isssssi", $supervisor, $idea, $name, $abstract, $st_date, $end_date, $pid);
     if($project_update->execute()){
         $project_update->close();
         return TRUE;
@@ -163,7 +163,7 @@ function update_project ($pid, $supervisor, $idea, $name, $abstract=NULL, $pic=N
  */
 function delete_project ($pid){
     global $connection;
-    $project_delete= $connection->prepare("DELETE FROM `Projects` WHERE `idProjects`=?");
+    $project_delete= $connection->prepare("DELETE FROM `project` WHERE `project_id`=?");
     $project_delete->bind_param("i", $pid);
     if($project_delete->execute()){
         $project_delete->close();
@@ -178,7 +178,7 @@ function delete_project ($pid){
 function get_projects (){
     global $connection;
     $rows = array();
-    $query = "SELECT * FROM `Projects`";
+    $query = "SELECT * FROM `project`";
     $result = mysqli_query($connection, $query);
     if (mysqli_num_rows($result) > 0)
         while ($row = mysqli_fetch_assoc($result)){
@@ -195,7 +195,7 @@ function get_projects (){
 function  get_project_by_id ($pid){
     $pid= intval($pid);
     global $connection;
-    $query = "SELECT * FROM `Projects` WHERE `idProjects` = ?";
+    $query = "SELECT * FROM `project` WHERE `project_id` = ?";
 	$stmt = mysqli_prepare($connection, $query);
 	mysqli_stmt_bind_param($stmt, "s", $pid);
 	if (mysqli_stmt_execute($stmt)) {
@@ -219,7 +219,7 @@ function  get_project_by_id ($pid){
  */
 function insert_pfile ($uploader_id, $upload_time, $url, $desc){
     global $connection;
-    $pfile_ins= $connection->prepare("INSERT INTO `projectFiles` (`uploaderID`, `uploadTime`, `URL`, `descreption`) VALUES (?, ?, ?, ?)");
+    $pfile_ins= $connection->prepare("INSERT INTO `project_file` (`user_id`, `upload_time`, `url`, `descreption`) VALUES (?, ?, ?, ?)");
     $pfile_ins->bind_param("isss", $uploader_id, $upload_time, $url, $desc);
     if($pfile_ins->execute()){
         $pfile_ins->close();
@@ -237,7 +237,7 @@ function insert_pfile ($uploader_id, $upload_time, $url, $desc){
  */
 function update_pfile ($pid, $upload_time, $url, $desc){
     global $connection;
-    $pfile_update=  $connection->prepare("UPDATE `projectFiles` SET `uploadTime`=?, `URL`=?, `descreption`=? WHERE `projectID`=?");
+    $pfile_update=  $connection->prepare("UPDATE `project_file` SET `upload_time`=?, `url`=?, `descreption`=? WHERE `project_id`=?");
     $pfile_update->bind_param("sssi", $upload_time, $url, $desc, $pid);
     if($pfile_update->execute()){
         $pfile_update->close();
@@ -252,7 +252,7 @@ function update_pfile ($pid, $upload_time, $url, $desc){
  */
 function delete_pfile ($pid){
     global $connection;
-    $pfile_delete= $connection->prepare("DELETE FROM `projectFiles` WHERE `projectID`=?");
+    $pfile_delete= $connection->prepare("DELETE FROM `project_file` WHERE `project_id`=?");
     $pfile_delete->bind_param("i", $pid);
     if($pfile_delete->execute()){
         $pfile_delete->close();
@@ -267,7 +267,7 @@ function delete_pfile ($pid){
 function get_pfiles (){
     global $connection;
     $rows = array();
-    $query = "SELECT * FROM `projectFiles`";
+    $query = "SELECT * FROM `project_file`";
     $result = mysqli_query($connection, $query);
     if (mysqli_num_rows($result) > 0)
         while ($row = mysqli_fetch_assoc($result)){
@@ -284,7 +284,7 @@ function get_pfiles (){
 function  get_pfile_by_id ($pid){
     $pid= intval($pid);
     global $connection;
-    $query = "SELECT * FROM `Projects` WHERE `idProjects` = ?";
+    $query = "SELECT * FROM `project` WHERE `project_id` = ?";
 	$stmt = mysqli_prepare($connection, $query);
 	mysqli_stmt_bind_param($stmt, "s", $pid);
 	if (mysqli_stmt_execute($stmt)) {

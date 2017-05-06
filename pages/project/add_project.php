@@ -33,23 +33,21 @@ global $connection;
 if (isset($_POST['submit'])) { // Form has been submitted.
 	$errors = array();
 	// perform validations on the form data
-	$required_fields = array('supervisor', 'idea', 'name', 'abstract', 'pic', 'st_date', 'end_date', 'tag');
+	$required_fields = array('supervisor', 'idea', 'name', 'abstract', 'st_date', 'end_date');
 	$errors = array_merge($errors, check_required_fields($required_fields));
-	$fields_max_lengths = array('idea' => 450, 'name' => 45, 'abstract' => 1000, 'pic' => 45);
+	$fields_max_lengths = array('idea' => 450, 'name' => 45, 'abstract' => 1000);
 	$errors = array_merge($errors, check_max_field_lengths($fields_max_lengths));
-	$fields_min_lengths = array('idea' => 10, 'name' => 3, 'abstract' => 20, 'pic' => 10, 'st_date'=> 6, 'end_date'=>6);
+	$fields_min_lengths = array('idea' => 10, 'name' => 3, 'abstract' => 20, 'st_date'=> 6, 'end_date'=>6);
 	$errors = array_merge($errors, check_min_field_lengths($fields_min_lengths));
 	$supervisor = trim(mysql_prep($_POST['supervisor']));
 	$idea = trim(mysql_prep($_POST['idea']));
 	$name = trim(mysql_prep($_POST['name']));
 	$abstract = trim(mysql_prep($_POST['abstract']));
-	$pic = trim(mysql_prep($_POST['pic']));
 	$st_date = trim(mysql_prep($_POST['st_date']));
 	$end_date = trim(mysql_prep($_POST['end_date']));
-	$tag = trim(mysql_prep($_POST['tag']));
 
 	if ( empty($errors) ) {//check if project already exist
-		$query = "SELECT `idProjects` FROM `Projects` WHERE `name` = ?";
+		$query = "SELECT `project_id` FROM `project` WHERE `name` = ?";
 		$check_project_stmt = mysqli_prepare($connection, $query);
 		mysqli_stmt_bind_param($check_project_stmt, "s", $name);
 		mysqli_stmt_execute($check_project_stmt);
@@ -58,7 +56,7 @@ if (isset($_POST['submit'])) { // Form has been submitted.
 		if (mysqli_num_rows($result) >= 1) {//another project with the same name is found in the database
 			$message = "project Already exist.";
 		} else {//project is unique, then insert it
-            if (insert_project($supervisor, $idea, $name, $abstract, $pic, $st_date, $end_date, $tag)) {
+            if (insert_project($supervisor, $idea, $name, $abstract, $st_date, $end_date)) {
                 $message = "project data has been inserted successfully";
             } else {
                 $message = "An error has been occurred while inserting the project data!";
@@ -73,10 +71,8 @@ if (isset($_POST['submit'])) { // Form has been submitted.
 	$idea = "";
 	$name = "";
 	$abstract = "";
-	$pic = "";
 	$st_date = "";
 	$end_date = "";
-	$tag = "";
 }
 ?>
 <?php include("../../includes/header_admin.php"); ?>
@@ -106,20 +102,12 @@ if (isset($_POST['submit'])) { // Form has been submitted.
 					<td><textarea rows="5" cols="22" name="abstract" maxlength="1000" /><?php echo htmlentities($abstract); ?></textarea></td>
 				</tr>
 				<tr>
-					<td>Picture URL:</td>
-					<td><input type="url" name="pic" maxlength="45" value="<?php echo htmlentities($pic); ?>" /></td>
-				</tr>
-				<tr>
 					<td>Starting Date:</td>
 					<td><input type="date" name="st_date" maxlength="45" value="<?php echo htmlentities($st_date); ?>" /></td>
 				</tr>
 				<tr>
 					<td>End Date:</td>
 					<td><input type="date" name="end_date" maxlength="45" value="<?php echo htmlentities($end_date); ?>" /></td>
-				</tr>
-				<tr>
-					<td>Tag:</td>
-					<td><input type="number" name="tag" maxlength="45" value="<?php echo htmlentities($tag); ?>" /></td>
 				</tr>
 				<tr>
 					<td colspan="2"><input type="submit" name="submit" value="Add Project" /></td>

@@ -16,7 +16,6 @@ require_once ("../../includes/courses_projects_model.php");
 require_once ("../../includes/session.php");
 require_once("../../includes/db_connection.php");
 require_once("../../includes/functions.php");
-require_once("../../includes/form_functions.php");
 
 confirm_logged_in();
 
@@ -43,66 +42,34 @@ if (isset($_GET['id']) && (int) $_GET['id'] > 0) {//id of the selected project t
 		include("../../includes/sidebar.php");
 	}
 ?>
-<table id="structure">
-	<tr>
-		<td id="page">
-			<h2>View Projects</h2>
-			<?php if (!empty($message)) {echo "<p class=\"message\">" . $message . "</p>";} ?>
-			<?php if (!empty($errors)) { display_errors($errors); } ?>
-			<form action="view_project.php" method="post">
-			<table>
-            <?php
-            if (isset($project)){
-				echo "<tr>
-					      <td>Supervisor:</td>
-					      <td>{$project['Supervisor']}</td>
-					      <td>Idea:</td>
-					      <td>{$project['Idea']}</td>
-					      <td>Name:</td>
-					      <td>{$project['name']}</td>
-					      <td>Abstract:</td>
-					      <td>{$project['abstract']}</td>
-					      <td>Picture URL:</td>
-					      <td>{$project['Picture_URL']}</td>
-					      <td>Starting Date:</td>
-					      <td>{$project['dateStarted']}</td>
-					      <td>End Date:</td>
-					      <td>{$project['dateEnded']}</td>
-					      <td>Tag:</td>
-					      <td>{$project['tag']}</td>
-					      <td><a href=\"update_project.php?id={$id}\" class=\"button\">Update</a></td>
-					      <td><a href=\"delete_project.php?id={$id}\" class=\"button\">Delete</a></td>
-				      </tr>";
-            } elseif (isset($projects)) {
-                while ($project = array_shift($projects)) {
-                    echo "<tr>
-					          <td>Supervisor:</td>
-					          <td>{$project['Supervisor']}</td>
-					          <td>Idea:</td>
-					          <td>{$project['Idea']}</td>
-					          <td>Name:</td>
-					          <td>{$project['name']}</td>
-					          <td>Abstract:</td>
-					          <td>{$project['abstract']}</td>
-					          <td>Picture URL:</td>
-					          <td>{$project['Picture_URL']}</td>
-					          <td>Starting Date:</td>
-					          <td>{$project['dateStarted']}</td>
-					          <td>End Date:</td>
-					          <td>{$project['dateEnded']}</td>
-					          <td>Tag:</td>
-					          <td>{$project['tag']}</td>
-					      	  <td><a href=\"update_project.php?id={$project['idProjects']}\" class=\"button\">Update</a></td>
-					      	  <td><a href=\"delete_project.php?id={$project['idProjects']}\" class=\"button\">Delete</a></td>
-				          </tr>";
-                }
-            }
-            ?>
-			</table>
-			</form>
-		</td>
-	</tr>
-</table>
+<?php if (!empty($message)) {echo "<p class=\"message\">" . $message . "</p>";} ?>
+<?php
+if (isset($project)){
+	echo htmlentities($project['supervisor']);
+	echo htmlentities($project['idea']);
+	echo htmlentities($project['name']);
+	echo htmlentities($project['abstract']);
+	echo htmlentities($project['date_started']);
+	echo htmlentities($project['date_ended']);
+	if(admin_check()){
+		echo "<a href=\"update_project.php?id={$id}\"";
+		echo "<a href=\"delete_project.php?id={$id}\"";
+	}
+} elseif (isset($projects)) {
+	while ($project = array_shift($projects)) {
+		echo htmlentities($project['supervisor']);
+		echo htmlentities($project['idea']);
+		echo htmlentities($project['name']);
+		echo htmlentities($project['abstract']);
+		echo htmlentities($project['date_started']);
+		echo htmlentities($project['date_ended']);
+		if(admin_check()){
+			echo "<a href=\"update_project.php?id={$project['project_id']}\"";
+			echo "<a href=\"delete_project.php?id={$project['project_id']}\"";
+		}
+	}
+}
+?>
 <?php
 	if(admin_check()){ //user is admin
 		include("../../includes/footer_admin.php");
