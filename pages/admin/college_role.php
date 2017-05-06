@@ -30,7 +30,7 @@
 		if ( empty($errors) ) {
 			
 			//check if user already exist
-			$query = "SELECT userID FROM users WHERE UserName = ?";
+			$query = "SELECT user_id FROM user WHERE username = ?";
 			
 			$check_user_stmt = mysqli_prepare($connection, $query);
 			mysqli_stmt_bind_param($check_user_stmt, "s", $username);
@@ -39,12 +39,12 @@
 			mysqli_stmt_close($check_user_stmt);
 			
 			$result = mysqli_fetch_array($result, MYSQLI_ASSOC);
-			$userID = $result["userID"];
+			$userID = $result["user_id"];
 			
 			if ($userID == null) {
 				$message = "Username isn't correct!.";
 			} else {//username is correct
-				$query = "UPDATE users SET collegeRole = ? WHERE userID = ?";
+				$query = "UPDATE user SET college_role = ? WHERE user_id = ?";
 				
 				$update_role_stmt = mysqli_prepare($connection, $query);
 				mysqli_stmt_bind_param($update_role_stmt, "ss", $college_role, $userID);

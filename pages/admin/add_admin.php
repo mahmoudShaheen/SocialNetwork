@@ -26,7 +26,7 @@
 		if ( empty($errors) ) {
 			
 			//check if user already exist
-			$query = "SELECT userID FROM users WHERE UserName = ?";
+			$query = "SELECT user_id FROM user WHERE username = ?";
 			
 			$check_user_stmt = mysqli_prepare($connection, $query);
 			mysqli_stmt_bind_param($check_user_stmt, "s", $username);
@@ -35,12 +35,12 @@
 			mysqli_stmt_close($check_user_stmt);
 			
 			$result = mysqli_fetch_array($result, MYSQLI_ASSOC);
-			$userID = $result["userID"];
+			$userID = $result["user_id"];
 			
 			if ($userID == null) {
 				$message = "Username isn't correct.";
 			} else {//username found
-				$query = "INSERT INTO admin (userID) VALUES (?)";
+				$query = "INSERT INTO admin (user_id) VALUES (?)";
 				
 				$add_admin_stmt = mysqli_prepare($connection, $query);
 				mysqli_stmt_bind_param($add_admin_stmt, "i", $userID);

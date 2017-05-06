@@ -33,7 +33,7 @@
 		if ( empty($errors) ) {
 			
 			//check if user already exist
-			$query = "SELECT userID FROM users WHERE UserName = ?";
+			$query = "SELECT user_id FROM user WHERE username = ?";
 			
 			$check_user_stmt = mysqli_prepare($connection, $query);
 			mysqli_stmt_bind_param($check_user_stmt, "s", $username);
@@ -44,7 +44,7 @@
 			if (mysqli_num_rows($result) >= 1) {
 				$message = "User Already exist.";
 			} else {//username is unique
-				$query = "INSERT INTO users (UserName, PasswordHash) VALUES (?, ?)";
+				$query = "INSERT INTO user (username, password_hash) VALUES (?, ?)";
 				
 				$add_user_stmt = mysqli_prepare($connection, $query);
 				mysqli_stmt_bind_param($add_user_stmt, "ss", $username, $hashed_password);
