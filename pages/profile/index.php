@@ -39,7 +39,7 @@
 <?php
 	
 	//check if user already exist
-	$query = "SELECT userID FROM Users WHERE userID = ?";
+	$query = "SELECT user_id FROM user WHERE user_id = ?";
 	
 	$check_user_stmt = mysqli_prepare($connection, $query);
 	mysqli_stmt_bind_param($check_user_stmt, "s", $user_id);
@@ -48,7 +48,7 @@
 	mysqli_stmt_close($check_user_stmt);
 	
 	$result = mysqli_fetch_array($result, MYSQLI_ASSOC);
-	$userID = $result["userID"];
+	$userID = $result["user_id"];
 	
 	if ($userID == null) {//if user id from query string is wrong
 		echo "Wrong user ID";
@@ -59,14 +59,13 @@
 		$user = get_user_data($user_id);
 		$college_role = "";
 		 if( $user_row = mysqli_fetch_assoc($user)) {
-			echo htmlentities($user_row["FirstName"]);
-			echo htmlentities($user_row["MiddleName"]);
-			echo htmlentities($user_row["LastName"]);
-			echo htmlentities($user_row["UserName"]);
-			echo htmlentities($user_row["PictureURL"]);
+			echo htmlentities($user_row["first_name"]);
+			echo htmlentities($user_row["middle_name"]);
+			echo htmlentities($user_row["last_name"]);
+			echo htmlentities($user_row["username"]);
 			echo htmlentities($user_row["about"]);
-			echo htmlentities($user_row["collegeRole"]);
-			$college_role = $user_row["collegeRole"];
+			echo htmlentities($user_row["college_role"]);
+			$college_role = $user_row["college_role"];
 		 }
 		 
 		$emails = get_user_emails($user_id);
@@ -87,44 +86,33 @@
 		$positions = get_user_positions($user_id);
 		while( $position_row = mysqli_fetch_assoc($positions)) {
 			echo htmlentities($position_row["company"]);
-			echo htmlentities($position_row["positionName"]);
-		}
-		
-		if($college_role == "Professor" || $college_role == "TA"){
-			$researches = get_user_researches($user_id);
-			while( $researches_row = mysqli_fetch_assoc($researches)) {
-				echo htmlentities($researches_row["Title"]);
-				echo htmlentities($researches_row["Idea"]);
-				echo htmlentities($researches_row["idResearches"]);
-			}
+			echo htmlentities($position_row["position"]);
 		}
 		
 		$projects = get_user_projects($user_id);
 		while( $projects_row = mysqli_fetch_assoc($projects)) {
-				echo htmlentities($projects_row["Picture_URL"]);
 				echo htmlentities($projects_row["name"]);
-				echo htmlentities($projects_row["Idea"]);
-				echo htmlentities($projects_row["idProjects"]);
+				echo htmlentities($projects_row["idea"]);
+				echo htmlentities($projects_row["project_id"]);
 			}
 		
 		if($college_role == "student"){
-			//keys: idCourses, Name, about, department, Grading Schema
 			$student_courses = get_student_courses($user_id);
 			while( $student_courses_row = mysqli_fetch_assoc($student_courses)) {
-				echo htmlentities($student_courses_row["Name"]);
+				echo htmlentities($student_courses_row["name"]);
 				echo htmlentities($student_courses_row["about"]);
 				echo htmlentities($student_courses_row["department"]);
-				echo htmlentities($student_courses_row["idCourses"]);
+				echo htmlentities($student_courses_row["course_id"]);
 			}
 		}
 		
 		if($college_role == "Professor" || $college_role == "TA"){
 			$prof_courses = get_prof_courses($user_id);
 			while( $prof_courses_row = mysqli_fetch_assoc($prof_courses)) {
-					echo htmlentities($prof_courses_row["Name"]);
+					echo htmlentities($prof_courses_row["name"]);
 					echo htmlentities($prof_courses_row["about"]);
 					echo htmlentities($prof_courses_row["department"]);
-					echo htmlentities($prof_courses_row["idCourses"]);
+					echo htmlentities($prof_courses_row["course_id"]);
 			}
 		}
 		
@@ -133,22 +121,22 @@
 		$posts = get_user_posts($user_id, $page_number);
 		while( $post_row = mysqli_fetch_assoc($posts)) {
 			//get post owner data
-			 $post_user = get_user_data($post_row["userID"]);
+			 $post_user = get_user_data($post_row["user_id"]);
 			 if( $post_user_row = mysqli_fetch_assoc($post_user)) {
-				echo htmlentities($post_user_row["UserName"]);
-				echo htmlentities($post_user_row["FirstName"]);
-				echo htmlentities($post_user_row["MiddleName"]);
-				echo htmlentities($post_user_row["LastName"]);
-				echo htmlentities($post_user_row["PictureURL"]);
-				echo htmlentities($post_user_row["collegeRole"]);
+				echo htmlentities($user_row["first_name"]);
+				echo htmlentities($user_row["middle_name"]);
+				echo htmlentities($user_row["last_name"]);
+				echo htmlentities($user_row["username"]);
+				echo htmlentities($user_row["about"]);
+				echo htmlentities($user_row["college_role"]);
 				
 			 }
 			 //post payload
 			echo htmlentities($post_row["time"]);
-			echo htmlentities($post_row["userID"]);
+			echo htmlentities($post_row["user_id"]);
 			echo htmlentities($post_row["post"]);
-			echo htmlentities($post_row["postID"]);
-			$post_id = $post_row["postID"];
+			echo htmlentities($post_row["post_id"]);
+			$post_id = $post_row["post_id"];
 			
 			//get post tags
 			$post_tags = get_post_tags($post_id);
@@ -157,17 +145,17 @@
 			}
 			
 			//get post comments
-			$post_comment = get_post_comments($post_row["postID"]);
+			$post_comment = get_post_comments($post_row["post_id"]);
 			 while( $post_comment_row = mysqli_fetch_assoc($post_comment)) {
 				 //get comment owner data
-				$comment_user = get_user_data($post_comment_row["userID"]);
+				$comment_user = get_user_data($post_comment_row["user_id"]);
 				 if( $comment_user_row = mysqli_fetch_assoc($comment_user)) {
-					echo htmlentities($comment_user_row["UserName"]);
-					echo htmlentities($comment_user_row["FirstName"]);
-					echo htmlentities($comment_user_row["MiddleName"]);
-					echo htmlentities($comment_user_row["LastName"]);
-					echo htmlentities($comment_user_row["PictureURL"]);
-					echo htmlentities($comment_user_row["collegeRole"]);
+					echo htmlentities($user_row["first_name"]);
+					echo htmlentities($user_row["middle_name"]);
+					echo htmlentities($user_row["last_name"]);
+					echo htmlentities($user_row["username"]);
+					echo htmlentities($user_row["about"]);
+					echo htmlentities($user_row["college_role"]);
 				 }
 				 //get comment time and payload
 				echo htmlentities($post_comment_row["comment"]);
