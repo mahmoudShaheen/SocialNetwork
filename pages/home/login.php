@@ -87,13 +87,7 @@
 	}
 ?>
 <?php
-	if(admin_check()){ //user is admin
-		include("../../includes/header_admin.php");
-		include("../../includes/sidebar_admin.php");
-	}else{ //normal user
-		include("../../includes/header.php");
-		include("../../includes/sidebar.php");
-	}
+	include("../../includes/header_login.php");
 ?>
 <table id="structure">
 	<tr>
