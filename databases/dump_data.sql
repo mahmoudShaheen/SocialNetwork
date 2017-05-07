@@ -18,7 +18,7 @@ INSERT INTO `project` (`project_id`, `supervisor`, `idea`, `name`, `abstract`, `
 INSERT INTO `project_file` (`project_id`, `user_id`, `upload_time`, `url`, `descreption`) VALUES(1, 1, '2017-05-06 12:49:51', '../../uploads/project_files/1/ER.pdf', 'test with ER');
 INSERT INTO `project_tag` (`project_id`, `tag_id`) VALUES(1, 1),(1, 2);
 INSERT INTO `user_project` (`user_id`, `project_id`) VALUES(1, 1),(2, 2);
-INSERT INTO `lab` (`lab_id`, `user_id`, `name`, `location`, `about`) VALUES ('1', '1', 'lab1', 'location', 'about'), ('1', '1', 'lab2', 'location2', 'about');
+INSERT INTO `lab` (`lab_id`, `user_id`, `name`, `location`, `about`) VALUES ('1', '1', 'lab1', 'location', 'about'), ('2', '1', 'lab2', 'location2', 'about');
 INSERT INTO `safe` (`safe_id`, `lab_id`, `name`) VALUES ('1', '1', 'safe11'), ('2', '1', 'safe12'), ('3', '2', 'safe21'), ('4', '2', 'safe22'), ('5', '2', 'safe23');
 INSERT INTO `component` (`component_id`, `safe_id`, `name`, `functional`, `count`, `state`, `Datasheet_url`) VALUES ('1', '1', 'component1', '1', '5', '1', 'url'),('2', '2', 'component2', '1', '1', '1', 'url'),('3', '1', 'component3', '1', '10', '1', 'url'),('4', '3', 'component1', '1', '0', '1', 'url'),('5', '5', 'component1', '1', '4', '1', 'url');
 INSERT INTO `borrow` (`user_id`, `component`) VALUES ('1', '3'), ('1', '4'), ('2', '1'), ('2', '2'), ('2', '5');
