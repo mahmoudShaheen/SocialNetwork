@@ -20,8 +20,8 @@
 
 <?php
 	//get user id from query string if no query string logged in user profile is shown
-	if (isset($_GET['user_id']) ) {
-		$user_id = $_GET['user_id'];
+	if (isset($_GET['id']) ) {
+		$user_id = $_GET['id'];
 		echo $user_id;
 	}else{
 		$user_id = $_SESSION['user_id'];
