@@ -56,16 +56,16 @@ if (isset($project)){
 		echo "<a href=\"delete_project.php?id={$id}\"";
 	}
 } elseif (isset($projects)) {
-	while ($project = array_shift($projects)) {
+	while ($project = mysqli_fetch_assoc($projects)) {
 		echo htmlentities($project['supervisor']);
 		echo htmlentities($project['idea']);
 		echo htmlentities($project['name']);
 		echo htmlentities($project['abstract']);
 		echo htmlentities($project['date_started']);
 		echo htmlentities($project['date_ended']);
-		if(admin_check()){
-			echo "<a href=\"update_project.php?id={$project['project_id']}\"";
-			echo "<a href=\"delete_project.php?id={$project['project_id']}\"";
+		if(admin_check()){ //add link for edit, delete
+			//echo "<a href=\"update_project.php?id={$project['project_id']}\" ";
+			//echo "<a href=\"delete_project.php?id={$project['project_id']}\" ";
 		}
 	}
 }

@@ -31,7 +31,7 @@
 	//keys: user_id, email
 	function get_user_emails($user_id){
         global $connection;
-		$query = "SELECT * FROM email WHERE user_id = ? ORDER BY email DESC";
+		$query = "SELECT * FROM emails WHERE user_id = ? ORDER BY email DESC";
 		$get_emails_stmt =  mysqli_prepare($connection, $query);
 		mysqli_stmt_bind_param($get_emails_stmt, "i", $user_id);
 		mysqli_stmt_execute($get_emails_stmt);
@@ -55,7 +55,7 @@
 	//keys: skillID, skill
 	function get_user_skills($user_id){
         global $connection;
-		$query = "SELECT * FROM skill WHERE skill_id = ";
+		$query = "SELECT * FROM skill WHERE skill_id IN  ";
 		$query .= "(SELECT skill_id FROM user_skill WHERE user_id = ?) ORDER BY skill DESC";
 		$get_skills_stmt =  mysqli_prepare($connection, $query);
 		mysqli_stmt_bind_param($get_skills_stmt, "i", $user_id);
@@ -112,7 +112,7 @@
 	//keys: idProjects, Supervisor, Idea, name, abstract, Picture_URL, dateStarted, dateEnded, *tag
 	function get_user_projects($user_id){
         global $connection;
-		$query = "SELECT * FROM project WHERE project_id = ";
+		$query = "SELECT * FROM project WHERE project_id IN  ";
 		$query .= "(SELECT project_id FROM user_project WHERE user_id = ?)  ORDER BY name DESC";
 		$get_projects_stmt =  mysqli_prepare($connection, $query);
 		mysqli_stmt_bind_param($get_projects_stmt, "i", $user_id);
@@ -137,7 +137,7 @@
 	//keys: idCourses, Name, about, department, Grading Schema
 	function get_student_courses($user_id){
         global $connection;
-		$query = "SELECT * FROM course WHERE course_id = ";
+		$query = "SELECT * FROM course WHERE course_id IN  ";
 		$query .= "(SELECT course_id FROM student_course WHERE user_id = ?)  ORDER BY name DESC";
 		$get_student_courses_stmt =  mysqli_prepare($connection, $query);
 		mysqli_stmt_bind_param($get_student_courses_stmt, "i", $user_id);
@@ -150,7 +150,7 @@
 	//keys: idCourses, Name, about, department, Grading Schema
 	function get_prof_courses($user_id){
         global $connection;
-		$query = "SELECT * FROM course WHERE course = ";
+		$query = "SELECT * FROM course WHERE course_id IN  ";
 		$query .= "(SELECT course_id FROM prof_course WHERE user_id = ?) ORDER BY name DESC";
 		$get_prof_courses_stmt =  mysqli_prepare($connection, $query);
 		mysqli_stmt_bind_param($get_prof_courses_stmt, "i", $user_id);
@@ -187,8 +187,8 @@
 	//keys: tagID, tag
 	function get_post_tags($post_id){
         global $connection;
-		$query = "SELECT * FROM tag WHERE tag_id = ";
-		$query .= "(SELECT tag_id FROM post_yag WHERE post_id = ?) ORDER BY tag DESC";
+		$query = "SELECT * FROM tag WHERE tag_id IN  ";
+		$query .= "(SELECT tag_id FROM post_tag WHERE post_id = ?) ORDER BY tag DESC";
 		$get_post_tags_stmt =  mysqli_prepare($connection, $query);
 		mysqli_stmt_bind_param($get_post_tags_stmt, "i", $post_id);
 		mysqli_stmt_execute($get_post_tags_stmt);
@@ -200,7 +200,7 @@
 	//keys: tagID, tag
 	function get_project_tags($project_id){
         global $connection;
-		$query = "SELECT * FROM tag WHERE tag_id = ";
+		$query = "SELECT * FROM tag WHERE tag_id IN  ";
 		$query .= "(SELECT tag_id FROM project_tag WHERE project_id = ?) ORDER BY tag DESC";
 		$get_project_tags_stmt =  mysqli_prepare($connection, $query);
 		mysqli_stmt_bind_param($get_project_tags_stmt, "i", $project_id);
@@ -233,8 +233,8 @@
 	//keys: postID, userID, post, *tag, description, time
 	function get_tag_posts($tag){
         global $connection;
-		$query = "SELECT * FROM post WHERE post_id = ";
-		$query .= "(SELECT post_id FROM post_tag WHERE tag_id = ";
+		$query = "SELECT * FROM post WHERE post_id IN  ";
+		$query .= "(SELECT post_id FROM post_tag WHERE tag_id IN  ";
 		$query .= "(SELECT tag_id FROM tag WHERE tag = ?)) ORDER BY time DESC";
 		$get_tag_posts_stmt =  mysqli_prepare($connection, $query);
 		mysqli_stmt_bind_param($get_tag_posts_stmt, "s", $tag);
@@ -247,8 +247,8 @@
 	//keys: idProjects, Supervisor, Idea, name, abstract, Picture_URL, dateStarted, dateEnded, *tag
 	function get_tag_projects($tag){
         global $connection;
-		$query = "SELECT * FROM project WHERE project_id = ";
-		$query .= "(SELECT project_id FROM project_tag WHERE tag_id = ";
+		$query = "SELECT * FROM project WHERE project_id IN  ";
+		$query .= "(SELECT project_id FROM project_tag WHERE tag_id IN  ";
 		$query .= "(SELECT tag_id FROM tag WHERE tag = ?)) ORDER BY name DESC";
 		$get_tag_posts_stmt =  mysqli_prepare($connection, $query);
 		mysqli_stmt_bind_param($get_tag_posts_stmt, "s", $tag);

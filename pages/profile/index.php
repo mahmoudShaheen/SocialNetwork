@@ -48,9 +48,9 @@
 	mysqli_stmt_close($check_user_stmt);
 	
 	$result = mysqli_fetch_array($result, MYSQLI_ASSOC);
-	$userID = $result["user_id"];
+	$user_id = $result["user_id"];
 	
-	if ($userID == null) {//if user id from query string is wrong
+	if ($user_id == null) {//if user id from query string is wrong
 		echo "Wrong user ID";
 		exit;
 	} else {//username is correct
@@ -106,7 +106,7 @@
 			}
 		}
 		
-		if($college_role == "Professor" || $college_role == "TA"){
+		if($college_role == "prof" || $college_role == "ta"){
 			$prof_courses = get_prof_courses($user_id);
 			while( $prof_courses_row = mysqli_fetch_assoc($prof_courses)) {
 					echo htmlentities($prof_courses_row["name"]);

@@ -181,12 +181,9 @@ function get_projects (){
     $query = "SELECT * FROM `project`";
     $result = mysqli_query($connection, $query);
     if (mysqli_num_rows($result) > 0)
-        while ($row = mysqli_fetch_assoc($result)){
-            $rows[]= $row;
-        }
+        return $result;
     else
         return FALSE;
-    return $rows;
 }
 /**
  * Get specific project data from Projects table by its ID (one row)
