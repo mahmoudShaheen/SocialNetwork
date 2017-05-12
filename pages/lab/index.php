@@ -1,14 +1,12 @@
-<?php require_once("../../includes/labs_includes/statement_functions.php"); ?>
+<?php require_once("../../includes/labs_includes/crud_labs.php"); ?>
 <?php require_once("../../includes/session.php"); ?>
-<?php
-	require_once("../../includes/db_connection.php");
-	global $connection;
-?>
 <?php require_once("../../includes/functions.php"); ?>
+<?php require_once("../../includes/social_functions.php"); ?>
 
 <?php
 	confirm_logged_in();
 ?>
+
 <?php
 	if(admin_check()){ //user is admin
 		include("../../includes/header_admin.php");
@@ -23,12 +21,15 @@
 
     $all_labs = read_all_labs($read_all_labs_stmt);
 
-    while ($one_lab = $all_labs->fetch_array(MYSQLI_NUM)) {
-        echo "$one_lab[1] </br>";        // LabName entry
-        echo "$one_lab[2] </br>";        // Contents entry
-        echo "$one_lab[3] </br>";        // Place entry
-        echo "$one_lab[4] </br>";        // About entry
-        echo "$one_lab[5] </br>";        // Picture entry
+    while ($one_lab = $all_labs->fetch_assoc()) {
+
+		$result_set = get_user_data($one_lab['user_id']);
+		$user_data  = mysqli_fetch_assoc($result_set);
+
+        echo htmlentities($user_data['username']);          // user_name entry
+        echo htmlentities($one_lab['name']);                // content entry
+        echo htmlentities($one_lab['location']);            // location entry
+        echo htmlentities($one_lab['about']);               // about entry
     }
 
  ?>
