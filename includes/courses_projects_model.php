@@ -124,7 +124,7 @@ function  get_course_by_id ($cid){
   */
 function insert_project ($supervisor, $idea, $name, $abstract=NULL, $st_date, $end_date=NULL){
     global $connection;
-    $project_ins= $connection->prepare("INSERT INTO `project` (`supervisor`, `idea`, `name`, `abstract`, `date_started`, `date_ended`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+    $project_ins= $connection->prepare("INSERT INTO `project` (`supervisor`, `idea`, `name`, `abstract`, `date_started`, `date_ended`) VALUES (?, ?, ?, ?, ?, ?)");
     $project_ins->bind_param("isssss", $supervisor, $idea, $name, $abstract, $st_date, $end_date);
     if($project_ins->execute()){
         $project_ins->close();

@@ -48,7 +48,7 @@
 				mysqli_stmt_close($add_admin_stmt);
 				
 				
-				if (mysqli_affected_rows($connection) == 1) {
+				if (mysqli_affected_rows($connection)) {
 					$message = "The Admin was successfully added.";
 				} else {
 					$message = "The admin could not be added.";

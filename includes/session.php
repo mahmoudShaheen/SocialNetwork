@@ -29,7 +29,7 @@
 	
 	//checks if the user is administrator
 	function admin_check(){
-		return isset($_SESSION['admin']);
+		return ($_SESSION['admin'] == "1");
 	}
 	
 	//redirects user to login page
