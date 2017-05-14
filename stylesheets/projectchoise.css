@@ -1,0 +1,28 @@
+
+
+.activator {
+    
+    height: 300px;
+    width: 300px;
+}
+
+
+
+.projectTag li{
+    
+    display: inline;
+}
+.cata{
+    float: right;
+}
+
+.year{
+    float: left;
+
+}
+
+.professor{
+    
+    margin-left: 30%;
+    
+}

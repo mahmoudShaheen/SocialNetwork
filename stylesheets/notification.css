@@ -1,0 +1,33 @@
+.notiDate{
+    
+     display: inline;
+    float: left;
+    
+}
+
+
+.notiSender{
+     display: inline;
+    
+    float: right;
+    margin-right: 60px;
+    
+    
+    
+}
+
+.collection .collection-item.avatar .title{
+    
+    font-size: 24px;
+    opacity: .8;
+    
+    
+    
+}
+
+.collection .collection-item.avatar{
+    
+    border: 14px solid black;
+    
+    
+}
