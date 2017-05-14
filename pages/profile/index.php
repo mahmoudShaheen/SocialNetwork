@@ -36,6 +36,22 @@
 		$page_number = 0; //first page
 	}
 ?>
+
+		<!-- Page Content -->
+		
+				
+			
+		<div class="table">
+			<div class="container">
+			    <div class="panel panel-default">
+				  <!-- Default panel contents -->
+				  <div class="panel-heading">Profile Details</div>
+				</div>
+
+				  <table class="table">
+				     	
+
+
 <?php
 	
 	//check if user already exist
@@ -59,60 +75,85 @@
 		$user = get_user_data($user_id);
 		$college_role = "";
 		 if( $user_row = mysqli_fetch_assoc($user)) {
-			echo htmlentities($user_row["first_name"]);
-			echo htmlentities($user_row["middle_name"]);
-			echo htmlentities($user_row["last_name"]);
-			echo htmlentities($user_row["username"]);
-			echo htmlentities($user_row["about"]);
-			echo htmlentities($user_row["college_role"]);
-			$college_role = $user_row["college_role"];
+		 	echo '<tr>
+						  <td>Name </td>
+						  <td>'.$user_row['first_name'].' '.$user_row['middle_name'].' '.$user_row['last_name'].'</td>
+					</tr>
+					<tr>
+						  <td>Username </td>
+						  <td>'.$user_row['username'].'</td>
+					</tr>
+					<tr>
+						  <td>About </td>
+						  <td>'.$user_row['about'].'</td>
+					</tr>
+					<tr>
+						  <td>College Role </td>
+						  <td>'.$user_row['college_role'].'</td>
+					</tr>';
 		 }
-		 
 		$emails = get_user_emails($user_id);
 		 while( $email_row = mysqli_fetch_assoc($emails)) {
-			echo htmlentities($email_row["email"]);
+		 	echo '<tr>
+						  <td>Email </td>
+						  <td>'.$email_row['email'].'</td>
+					</tr>';
 		 }
 		 
 		$phone_numbers = get_user_phone_numbers($user_id);
 		while( $phone_row = mysqli_fetch_assoc($phone_numbers)) {
-			echo htmlentities($phone_row["phone_number"]);
+			echo '<tr>
+						  <td>Phone Number </td>
+						  <td>'.$phone_row['phone_number'].'</td>
+					</tr>';
 		 }
 		
 		$skills = get_user_skills($user_id);
 		while( $skill_row = mysqli_fetch_assoc($skills)) {
-			echo htmlentities($skill_row["skill"]);
+			echo '<tr>
+						  <td>Skills </td>
+						  <td>'.$skill_row['skill'].'</td>
+					</tr>';
 		}
 		
 		$positions = get_user_positions($user_id);
 		while( $position_row = mysqli_fetch_assoc($positions)) {
-			echo htmlentities($position_row["company"]);
-			echo htmlentities($position_row["position"]);
+			echo '<tr>
+						  <td>Company: '.$position_row['company'].'</td>
+						  <td>Position: '.$position_row['position'].'</td>
+					</tr>';
 		}
 		
 		$projects = get_user_projects($user_id);
 		while( $projects_row = mysqli_fetch_assoc($projects)) {
-				echo htmlentities($projects_row["name"]);
-				echo htmlentities($projects_row["idea"]);
-				echo htmlentities($projects_row["project_id"]);
+				echo '<tr>
+						  <td>Name: '.$projects_row['name'].'</td>
+						  <td>Idea: '.$projects_row['idea'].'</td>
+						  <td>project_id: '.$projects_row['project_id'].'</td>
+					</tr>';
 			}
 		
 		if($college_role == "student"){
 			$student_courses = get_student_courses($user_id);
 			while( $student_courses_row = mysqli_fetch_assoc($student_courses)) {
-				echo htmlentities($student_courses_row["name"]);
-				echo htmlentities($student_courses_row["about"]);
-				echo htmlentities($student_courses_row["department"]);
-				echo htmlentities($student_courses_row["course_id"]);
+				echo '<tr>
+						  <td>Course: '.$student_courses_row['name'].'</td>
+						  <td>'.$student_courses_row['about'].'</td>
+						  <td>'.$student_courses_row['department'].'</td>
+						  <td>Course_id: '.$student_courses_row['course_id'].'</td>
+					</tr>';
 			}
 		}
 		
 		if($college_role == "prof" || $college_role == "ta"){
 			$prof_courses = get_prof_courses($user_id);
 			while( $prof_courses_row = mysqli_fetch_assoc($prof_courses)) {
-					echo htmlentities($prof_courses_row["name"]);
-					echo htmlentities($prof_courses_row["about"]);
-					echo htmlentities($prof_courses_row["department"]);
-					echo htmlentities($prof_courses_row["course_id"]);
+				echo '<tr>
+						  <td>Course: '.$prof_courses_row['name'].'</td>
+						  <td>'.$prof_courses_row['about'].'</td>
+						  <td>'.$prof_courses_row['department'].'</td>
+						  <td>Course_id: '.$prof_courses_row['course_id'].'</td>
+					</tr>';
 			}
 		}
 		
@@ -123,12 +164,22 @@
 			//get post owner data
 			 $post_user = get_user_data($post_row["user_id"]);
 			 if( $post_user_row = mysqli_fetch_assoc($post_user)) {
-				echo htmlentities($user_row["first_name"]);
-				echo htmlentities($user_row["middle_name"]);
-				echo htmlentities($user_row["last_name"]);
-				echo htmlentities($user_row["username"]);
-				echo htmlentities($user_row["about"]);
-				echo htmlentities($user_row["college_role"]);
+			 	echo '<tr>
+			 			<td>Name</td>
+						<td>'.$user_row['first_name'].' '.$user_row['middle_name'].' '.$user_row['last_name'].'</td>
+					</tr>
+					<tr>
+						  <td>Username</td>
+						  <td>'.$user_row['username'].'</td>
+					</tr>
+					<tr>
+						<td>About</td>
+						<td>'.$user_row["about"].'</td>
+					</tr>
+					<tr>
+						<td>About</td>
+						<td>'.$user_row["college_role"].'</td>
+					</tr>';
 				
 			 }
 			 //post payload
@@ -164,7 +215,7 @@
 		}
 	}
 ?>
-
+</table>
 <?php
 	if(admin_check()){ //user is admin
 		include("../../includes/footer_admin.php");

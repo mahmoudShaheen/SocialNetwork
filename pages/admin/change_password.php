@@ -72,6 +72,12 @@
 ?>
 <?php include("../../includes/header_admin.php"); ?>
 <?php include("../../includes/sidebar_admin.php"); ?>
+<!-- Page Content -->
+		
+				
+			
+		<div class="table">
+			<div class="container">
 <table id="structure">
 	<tr>
 		<td id="page">
@@ -95,5 +101,5 @@
 			</form>
 		</td>
 	</tr>
-</table>
+</table></div></div>
 <?php include("../../includes/footer_admin.php"); ?>
