@@ -53,14 +53,16 @@
 				mysqli_stmt_close($add_user_stmt);
 				
 				if (mysqli_affected_rows($connection)) {
-					$message = "The user was successfully created.";
+					
+					$message = '<div class="alert alert-success">The user was successfully created.</div>';
+
 				} else {
-					$message = "The user could not be created.";
+					$message = '<div class="alet alert-danger">The user could not be created.</div>';
 					$message .= "<br />";
 				}
 			}
 		} else {
-			$message = "There were " . count($errors) . " errors in the form.";
+			$message = '<div class="alert alert-warning">There were '.count($errors). ' errors in the form.</div>' ;
 		}
 	} else { // Form has not been submitted.
 		$username = "";
@@ -69,7 +71,14 @@
 ?>
 <?php include("../../includes/header_admin.php"); ?>
 <?php include("../../includes/sidebar_admin.php"); ?>
-<table id="structure">
+
+		<!-- Page Content -->
+		
+				
+			
+		<div class="table">
+			<div class="container">
+			<table id="structure">
 	<tr>
 		<td id="page">
 			<h2>Create New User</h2>
@@ -80,7 +89,7 @@
 				<tr>
 					<td>Username:</td>
 					<td><input type="text" name="username" maxlength="30" value="<?php echo htmlentities($username); ?>" /></td>
-				</tr>
+				</tr><br />
 				<tr>
 					<td>Password:</td>
 					<td><input type="password" name="password" maxlength="30" value="<?php echo htmlentities($password); ?>" /></td>
@@ -92,5 +101,5 @@
 			</form>
 		</td>
 	</tr>
-</table>
+</table></div></div>
 <?php include("../../includes/footer_admin.php"); ?>

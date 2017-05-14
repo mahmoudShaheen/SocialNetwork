@@ -48,7 +48,7 @@
 				mysqli_stmt_close($add_admin_stmt);
 				
 				
-				if (mysqli_affected_rows($connection)) {
+				if (mysqli_affected_rows($connection) > 0) {
 					$message = "The Admin was successfully added.";
 				} else {
 					$message = "The admin could not be added.";
@@ -64,6 +64,13 @@
 ?>
 <?php include("../../includes/header_admin.php"); ?>
 <?php include("../../includes/sidebar_admin.php"); ?>
+
+		<!-- Page Content -->
+		
+				
+			
+		<div class="table">
+			<div class="container">
 <table id="structure">
 	<tr>
 		<td id="page">
@@ -74,7 +81,7 @@
 			<table>
 				<tr>
 					<td>Username:</td>
-					<td><input type="text" name="username" maxlength="30" value="<?php echo htmlentities($username); ?>" /></td>
+					<td><input type="text" class="form-control" name="username" maxlength="30" value="<?php echo htmlentities($username); ?>" /></td>
 				</tr>
 				<tr>
 					<td colspan="2"><input type="submit" name="submit" value="Add Admin" /></td>
@@ -83,5 +90,5 @@
 			</form>
 		</td>
 	</tr>
-</table>
+</table></div></div>
 <?php include("../../includes/footer_admin.php"); ?>

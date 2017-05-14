@@ -77,6 +77,8 @@ if (isset($_POST['submit'])) { // Form has been submitted.
 ?>
 <?php include("../../includes/header_admin.php"); ?>
 <?php include("../../includes/sidebar_admin.php"); ?>
+<div class="table">
+			<div class="container">
 <table id="structure">
 	<tr>
 		<td id="page">
@@ -117,4 +119,5 @@ if (isset($_POST['submit'])) { // Form has been submitted.
 		</td>
 	</tr>
 </table>
+</div></div>
 <?php include("../../includes/footer_admin.php"); ?>
