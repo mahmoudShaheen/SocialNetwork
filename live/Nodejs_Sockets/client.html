@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title> WebSockets </title>
+	<link href="styledoc.css" rel="stylesheet" type="text/css"/>
+	<script language="JavaScript" type="text/javascript" src="jquery-3.1.1.js"></script>
+
+	</head>
+<body>
+	<div id="log"></div>
+	<input type="text" placeholder="Type your msg here .." id="msgtext">
+	<button> Send</button>
+	
+	<script>
+		
+		var name = prompt('what is your name ?');
+		var log = document.getElementById('log');
+			
+		var sock = new WebSocket("ws://192.168.43.169:5001");
+		
+		sock.onopen = function(){
+			sock.send(JSON.stringify({
+				type: "name",
+				data: name
+			}));
+		}
+
+		sock.onmessage = function(event){
+			console.log(event);
+			var json = JSON.parse(event.data);
+			
+			log.innerHTML += json.name +": "+json.data + '<br/>';
+			$('#log').animate({scrollTop: $('#log').prop("scrollHeight")}, 1000);
+		}
+		
+		document.querySelector('#msgtext').addEventListener('keypress', function (e) {
+			var key = e.which || e.keyCode;
+			if (key === 13) { // 13 is enter
+				var text = document.getElementById('msgtext');
+				sock.send(JSON.stringify({
+					type: "message",
+					data: text.value
+				}));
+				text.value = "";
+				text.focus();
+			}
+		});
+		
+		document.querySelector('button').onclick = function(){
+			var text = document.getElementById('msgtext');
+			sock.send(JSON.stringify({
+				type: "message",
+				data: text.value
+			}));
+			text.value = "";
+			text.focus();
+		};
+		
+				/*sock.onopen = function(event){
+			//alert('Successfully !!!');
+			setTimeout( function(){
+				sock.send("hey there");
+			}, 1000);
+		};*/
+		
+	</script>
+</body>
+</html>
