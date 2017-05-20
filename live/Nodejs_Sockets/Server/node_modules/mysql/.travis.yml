@@ -1,0 +1,69 @@
+language: node_js
+node_js:
+  - "0.6"
+  - "0.8"
+  - "0.10"
+  - "0.12"
+  - "1.8"
+  - "2.5"
+  - "3.3"
+  - "4.2.0" # Test timers regression
+  - "4.8"
+  - "5.12"
+  - "6.10"
+  - "7.9"
+env:
+  - "DOCKER_MYSQL_TYPE=mysql DOCKER_MYSQL_VERSION=5.7"
+matrix:
+  include:
+    - node_js: "6.10"
+      env: "DOCKER_MYSQL_TYPE=mysql DOCKER_MYSQL_VERSION=5.5"
+    - node_js: "6.10"
+      env: "DOCKER_MYSQL_TYPE=mysql DOCKER_MYSQL_VERSION=5.6"
+    - node_js: "6.10"
+      env: "DOCKER_MYSQL_TYPE=mariadb DOCKER_MYSQL_VERSION=5.5"
+    - node_js: "6.10"
+      env: "DOCKER_MYSQL_TYPE=mariadb DOCKER_MYSQL_VERSION=10.0"
+    - node_js: "6.10"
+      env: "DOCKER_MYSQL_TYPE=mariadb DOCKER_MYSQL_VERSION=10.1"
+
+dist: trusty
+sudo: required
+services:
+  - docker
+
+cache:
+  directories:
+    - node_modules
+
+before_install:
+  # Setup Node.js version-specific dependencies
+  - "test $TRAVIS_NODE_VERSION != '0.6' || npm rm --save-dev nyc"
+  - "test $TRAVIS_NODE_VERSION != '0.8' || npm rm --save-dev nyc"
+  - "test $(echo $TRAVIS_NODE_VERSION | cut -d. -f1) -ge 4 || npm rm --save-dev eslint"
+
+  # Update Node.js modules
+  - "test ! -d node_modules || npm prune"
+  - "test ! -d node_modules || npm rebuild"
+
+  # Setup environment
+  - "export MYSQL_DATABASE=node_mysql"
+  - "export MYSQL_USER=root"
+
+install:
+  - "docker run -d --name mysql -e MYSQL_ALLOW_EMPTY_PASSWORD=yes -e MYSQL_DATABASE=$MYSQL_DATABASE $DOCKER_MYSQL_TYPE:$DOCKER_MYSQL_VERSION"
+  - "npm install"
+  - "docker run --link mysql:db -e CHECK_PORT=3306 -e CHECK_HOST=db giorgos/takis"
+
+before_script:
+  - "docker --version"
+  - "docker exec mysql mysql -e 'select version()'"
+
+script:
+  # Run test script, depending on nyc install
+  - "test ! -z $(npm -ps ls nyc) || npm test"
+  - "test   -z $(npm -ps ls nyc) || npm run-script test-ci"
+  - "test   -z $(npm -ps ls eslint) || npm run-script lint"
+
+after_script:
+  - "test -d .nyc_output && npm install coveralls@2 && nyc report --reporter=text-lcov | coveralls"

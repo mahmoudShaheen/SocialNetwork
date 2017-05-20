@@ -2,35 +2,54 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title> WebSockets </title>
+	<title> WebSockets Chat Window </title>
 	<link href="styledoc.css" rel="stylesheet" type="text/css"/>
 	<script language="JavaScript" type="text/javascript" src="jquery-3.1.1.js"></script>
 
 	</head>
 <body>
-	<div id="log"></div>
-	<input type="text" placeholder="Type your msg here .." id="msgtext">
-	<button> Send</button>
+
+	<div align="center" width="50%">
+		<table>
+			<tr>
+				<td>
+					<div id="log"></div>
+					<br />
+					<hr>
+					<input type="text" placeholder="Type your msg here .." id="msgtext">
+					<br />
+					<button>Send</button>
+				</td>
+			</tr>
+		<table>
+	</div>
+	
 	
 	<script>
 		
-		var name = prompt('what is your name ?');
+		var name = prompt('what is your username ?');
+		var friendname = prompt('what is your friend username ?');
 		var log = document.getElementById('log');
 			
 		var sock = new WebSocket("ws://localhost:5001");
 		
 		sock.onopen = function(){
 			sock.send(JSON.stringify({
-				type: "name",
-				data: name
+				type: "open_chat",
+				fromname: name,
+				toname: friendname
 			}));
 		}
 
 		sock.onmessage = function(event){
 			console.log(event);
 			var json = JSON.parse(event.data);
-			
-			log.innerHTML += json.name +": "+json.data + '<br/>';
+			if(json.name=="You"){
+				log.innerHTML += ("<div style=\"float: right; background: white; padding: 5px; border: solid 1px black;\"> <span style=\"color: red;\">"+ json.name +": "+ "<span style=\"color: blue;\"> "+json.data + "</span></div><br/><br/>");
+			}else{
+				log.innerHTML += ("<div style=\"float: left;  background: yellow; padding: 5px; border: solid 1px black;\"> <span style=\"color: red;\">"+ json.name +": "+ "<span style=\"color: blue;\"> "+json.data + "</span></div><br/><br/>");
+			}
+			//log.innerHTML += '<div style="float: right;"> <span style="color: red;">'+ json.name +": "+ '<span style="color: blue;"> '+json.data + '</span></div>'+'<br/>';
 			$('#log').animate({scrollTop: $('#log').prop("scrollHeight")}, 1000);
 		}
 		
