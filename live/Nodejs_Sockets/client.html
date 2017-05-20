@@ -17,7 +17,7 @@
 		var name = prompt('what is your name ?');
 		var log = document.getElementById('log');
 			
-		var sock = new WebSocket("ws://192.168.43.169:5001");
+		var sock = new WebSocket("ws://localhost:5001");
 		
 		sock.onopen = function(){
 			sock.send(JSON.stringify({
