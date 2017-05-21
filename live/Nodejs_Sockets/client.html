@@ -1,4 +1,14 @@
-<!DOCTYPE html>
+<!--
+
+	//check if user logged in
+	//if not redirect to login page
+	//require_once("../../includes/session.php"); 
+	//confirm_logged_in();
+	//$username = $_SESSION['username'];
+	
+-->
+
+<!--DOCTYPE html-->
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
@@ -16,8 +26,9 @@
 					<div id="log"></div>
 					<br />
 					<hr>
-					<input type="text" placeholder="Type your msg here .." id="msgtext">
+					<input type="text" placeholder="Type your msg here .." id="msgtext" width="100%"/>
 					<br />
+					<hr>
 					<button>Send</button>
 				</td>
 			</tr>
@@ -26,7 +37,9 @@
 	
 	
 	<script>
-		
+		//var friendname = prompt('what is your friend username ?');
+		//var name = <?php echo $username; ?>;
+		 
 		var name = prompt('what is your username ?');
 		var friendname = prompt('what is your friend username ?');
 		var log = document.getElementById('log');
@@ -45,9 +58,9 @@
 			console.log(event);
 			var json = JSON.parse(event.data);
 			if(json.name=="You"){
-				log.innerHTML += ("<div style=\"float: right; background: white; padding: 5px; border: solid 1px black;\"> <span style=\"color: red;\">"+ json.name +": "+ "<span style=\"color: blue;\"> "+json.data + "</span></div><br/><br/>");
+				log.innerHTML += ("<div style=\"border-radius: 2em; float: right; background: white; padding: 7px; border: solid 1px black;\"> <span style=\"color: red;\">"+ json.name +": "+ "<span style=\"color: blue;\"> "+json.data + "</span></div><br/><br/>");
 			}else{
-				log.innerHTML += ("<div style=\"float: left;  background: yellow; padding: 5px; border: solid 1px black;\"> <span style=\"color: red;\">"+ json.name +": "+ "<span style=\"color: blue;\"> "+json.data + "</span></div><br/><br/>");
+				log.innerHTML += ("<div style=\"border-radius: 2em; float: left;  background: yellow; padding: 7px; border: solid 1px black;\"> <span style=\"color: red;\">"+ json.name +": "+ "<span style=\"color: blue;\"> "+json.data + "</span></div><br/><br/>");
 			}
 			//log.innerHTML += '<div style="float: right;"> <span style="color: red;">'+ json.name +": "+ '<span style="color: blue;"> '+json.data + '</span></div>'+'<br/>';
 			$('#log').animate({scrollTop: $('#log').prop("scrollHeight")}, 1000);

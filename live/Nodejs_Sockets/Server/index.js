@@ -8,7 +8,7 @@ var sleep = require('system-sleep');
 var connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
-  password : '',
+  password : 'root',
   database : 'mydb'
 });
 connection.connect();
