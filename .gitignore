@@ -48,7 +48,3 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
-
-# idea files
-.idea
-live/Nodejs_Sockets/client.html
