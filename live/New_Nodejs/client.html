@@ -65,7 +65,7 @@
 				log.innerHTML += ("<div style=\"display: inline; word-break: break-all; word-wrap: break-word; width: 180px; overflow-y: auto; border-radius: 15px; float: left;  background: yellow; padding: 7px; border: solid 1px black;\"> <span style=\"color: red;\">"+ json.name +": "+ "<span style=\"color: blue;\"> "+json.data + "</span></div><br/><br/>");
 			}
 			//log.innerHTML += '<div style="float: right;"> <span style="color: red;">'+ json.name +": "+ '<span style="color: blue;"> '+json.data + '</span></div>'+'<br/>';
-			$('#log').animate({scrollTop: $('#log').prop("scrollHeight")}, 1000);
+			$('#log').animate({scrollTop: $('#log').prop("scrollHeight")}, 10);
 		}
 		
 		document.querySelector('#msgtext').addEventListener('keypress', function (e) {
