@@ -519,7 +519,7 @@ DROP TABLE IF EXISTS `mydb`.`message` ;
 CREATE TABLE IF NOT EXISTS `mydb`.`message` (
   `message_id` INT NOT NULL AUTO_INCREMENT,
   `header_id` INT UNSIGNED NOT NULL COMMENT 'this message belongs to header ..',
-  `owner` BIT NULL COMMENT 'owner is user1(bit = 0)\nowner is user2(bit = 1)',
+  `owner` INT NULL COMMENT 'owner is user1(bit = 0)\nowner is user2(bit = 1)',
   `message` TEXT NULL,
   `time` DATETIME NULL,
   PRIMARY KEY (`message_id`, `header_id`),

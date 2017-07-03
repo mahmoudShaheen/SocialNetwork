@@ -354,7 +354,7 @@ DROP TABLE IF EXISTS `mydb`.`message` ;
 CREATE TABLE IF NOT EXISTS `mydb`.`message` (
   `message_id` INT NOT NULL AUTO_INCREMENT,
   `header_id` INT UNSIGNED NOT NULL,
-  `owner` BIT NULL,
+  `owner` INT NULL,
   `message` TEXT NULL,
   `time` DATETIME NULL,
   PRIMARY KEY (`message_id`, `header_id`),
