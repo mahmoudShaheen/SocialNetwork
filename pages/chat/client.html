@@ -1,0 +1,169 @@
+<DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title> Chat </title>
+	<link href="css/styledoc.css" rel="stylesheet" type="text/css"/>
+	<script language="JavaScript" type="text/javascript" src="js/jquery-3.1.1.js"></script>
+
+</head>
+
+<body>
+	<div>
+		<h1> Chat App </h1>
+	</div>
+	<div style="position: absolute; bottom: 30px; width: 90%; height: 400px; ">
+		<div align="center" width="350px" height="100%">
+			<table>
+				<tr >
+					<td width="350px"; height="400px"; >
+						<div id="log"></div>
+						<input type="text" placeholder="Type your msg here .." id="msgtext" width="100%"/>
+						<br />
+						<button>Send</button>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	
+	
+	<script>
+		function sleepMillis(miliseconds) {
+		   var currentTime = new Date().getTime();
+		   while (currentTime + miliseconds >= new Date().getTime()) {
+		   }
+		}
+
+		var AccountName = "";
+		
+		function getSessionName() {
+			getRequest(
+				'conf.php', // URL for the PHP file
+				drawOutput,  // handle successful request
+				drawError    // handle error
+			);
+			return false;
+		}
+		
+		// handles drawing an error message
+		function drawError() {
+			log.innerHTML += ("<div style=\"display: inline;  width: 180px; overflow-y: auto; border-radius: 15px; float: left;  background: yellow; padding: 7px; border: solid 1px black;\"> <span style=\"color: red;\">"+ "Warning" +": "+ "<span style=\"color: blue;\"> "+ "You must login first" + "</span></div><br/><br/>");
+		}
+		
+		// handles the response, adds the html
+		function drawOutput(responseText) {
+			//log.innerHTML += ("<div style=\"display: inline;  width: 180px; overflow-y: auto; border-radius: 15px; float: left;  background: yellow; padding: 7px; border: solid 1px black;\"> <span style=\"color: red;\">"+ "Self" +": "+ "<span style=\"color: blue;\"> "+ responseText + "</span></div><br/><br/>");
+			AccountName = responseText;
+		}
+		
+		// helper function for cross-browser request object
+		function getRequest(url, success, error) {
+			var req = false;
+			try{
+				// most browsers
+				req = new XMLHttpRequest();
+			} catch (e){
+				// IE
+				try{
+					req = new ActiveXObject("Msxml2.XMLHTTP");
+				} catch(e) {
+					// try an older version
+					try{
+						req = new ActiveXObject("Microsoft.XMLHTTP");
+					} catch(e) {
+						return false;
+					}
+				}
+			}
+			if (!req) return false;
+			if (typeof success != 'function') success = function () {};
+			if (typeof error!= 'function') error = function () {};
+			req.onreadystatechange = function(){
+				if(req.readyState == 4) {
+					return req.status === 200 ? 
+						success(req.responseText) : error(req.status);
+				}
+			}
+			req.open("GET", url, true);
+			req.send(null);
+			return req;
+		}
+
+		getSessionName();
+		var sock;
+		var log = document.getElementById('log');
+		var friendname = "";
+		sleepMillis(100);
+		var UserName = "X";
+		sock = new WebSocket("ws://192.168.43.169:5001");
+		
+		sock.onopen = function(){
+			if(AccountName != ""){
+				UserName = AccountName;
+				friendname = prompt('what is your friend username ?');
+				sock.send(JSON.stringify({
+					type: "open_chat",
+					fromname: AccountName.trim(),
+					toname: friendname
+				}));
+			}else{
+				window.location.replace("../home/login.php");
+			}
+		}
+		
+		sock.onmessage = function(event){
+			console.log(event);
+			var json = JSON.parse(event.data);
+			if(json.name=="You"){
+				log.innerHTML += ("<div style=\"display: inline; word-wrap: break-word; width: 180px; overflow-y: auto; border-radius: 15px; float: right; background: white; padding: 7px; border: solid 1px black;\"> <span style=\"color: red;\">"+ json.name +": "+ "<span style=\"color: blue;\"> "+json.data + "</span></div><br/><br/>");
+			}else{
+				log.innerHTML += ("<div style=\"display: inline; word-wrap: break-word; width: 180px; overflow-y: auto; border-radius: 15px; float: left;  background: yellow; padding: 7px; border: solid 1px black;\"> <span style=\"color: red;\">"+ json.name +": "+ "<span style=\"color: blue;\"> "+json.data + "</span></div><br/><br/>");
+			}
+			//word-break: break-all; word-wrap: break-word;
+			//log.innerHTML += '<div style="float: right;"> <span style="color: red;">'+ json.name +": "+ '<span style="color: blue;"> '+json.data + '</span></div>'+'<br/>';
+			$('#log').animate({scrollTop: $('#log').prop("scrollHeight")}, 10);
+		}
+		
+		document.querySelector('#msgtext').addEventListener('keypress', function (e) {
+			var key = e.which || e.keyCode;
+			if (key === 13) { // 13 is enter
+				if (AccountName != UserName){
+					window.location.replace("../home/login.php");
+				}else{
+					var text = document.getElementById('msgtext');
+					sock.send(JSON.stringify({
+						type: "message",
+						data: text.value
+					}));
+					text.value = "";
+					text.focus();
+				}
+			}
+		});
+		
+		document.querySelector('button').onclick = function(){
+			if (AccountName != UserName){
+				window.location.replace("../home/login.php");
+			}else{
+				var text = document.getElementById('msgtext');
+				sock.send(JSON.stringify({
+					type: "message",
+					data: text.value
+				}));
+				text.value = "";
+				text.focus();
+			}
+		};
+		
+		var intervalID = setInterval(function(){
+			getSessionName();
+			if ( AccountName == "" || UserName == "X" || AccountName!=UserName){
+				window.location.replace("../home/login.php");
+			}
+		}, 2000);
+			
+		
+	</script>
+</body>
+</html>

@@ -49,8 +49,11 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+<<<<<<< HEAD
 # idea files
 .idea
 
 #node modules
+=======
+>>>>>>> origin/master
 node_modules
