@@ -86,31 +86,55 @@
 		$password = "";
 	}
 ?>
-<?php
-	include("../../includes/header_login.php");
-?>
-<table id="structure">
-	<tr>
-		<td id="page">
-			<h2>Staff Login</h2>
-			<?php if (!empty($message)) {echo "<p class=\"message\">" . $message . "</p>";} ?>
-			<?php if (!empty($errors)) { display_errors($errors); } ?>
-			<form action="login.php" method="post">
-			<table>
-				<tr>
-					<td>Username:</td>
-					<td><input type="text" name="username" maxlength="30" value="<?php echo htmlentities($username); ?>" /></td>
-				</tr>
-				<tr>
-					<td>Password:</td>
-					<td><input type="password" name="password" maxlength="30" value="<?php echo htmlentities($password); ?>" /></td>
-				</tr>
-				<tr>
-					<td colspan="2"><input type="submit" name="submit" value="Login" /></td>
-				</tr>
-			</table>
-			</form>
-		</td>
-	</tr>
-</table>
-<?php include("../../includes/footer_login.php"); ?>
+<!DOCTYPE html>
+<html >
+<head>
+  <meta charset="UTF-8">
+  <title>Login - CSE Network</title>
+  
+  
+  <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Open+Sans:600'>
+
+      <link rel="stylesheet" href="../../stylesheets/login-style.css">
+
+  
+</head>
+
+<body>
+  <div class="login-wrap">
+	<div class="login-html">
+		<input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Sign In</label>
+		<!--input id="tab-2" type="radio" name="tab" class="sign-up"--><!--label for="tab-2" class="tab">Sign Up</label-->
+		<?php if (!empty($message)) {echo "<p class=\"message\">" . $message . "</p>";} ?>
+		<?php if (!empty($errors)) { display_errors($errors); } ?>
+		<form action="login.php" method="post">
+		<div class="login-form">
+			<div class="sign-in-htm">
+				<div class="group">
+					<label for="user" class="label">Username</label>
+					<input id="user" type="text" class="input" name="username" maxlength="30" value="<?php echo htmlentities($username); ?>">
+				</div>
+				<div class="group">
+					<label for="pass" class="label">Password</label>
+					<input id="pass" type="password" class="input" data-type="password" name="password" maxlength="30" value="<?php echo htmlentities($password); ?>">
+				</div>
+				<div class="group">
+					<input id="check" type="checkbox" class="check" checked>
+					<label for="check"><span class="icon"></span> Keep me Signed in</label>
+				</div>
+				<div class="group">
+					<input type="submit" class="button" name="submit" value="Login">
+				</div>
+				<div class="hr"></div>
+				<div class="foot-lnk">
+					<a href="#forgot">Forgot Password?</a>
+				</div>
+			</div>
+		</div>
+		</form>
+	</div>
+</div>
+  
+  
+</body>
+</html>

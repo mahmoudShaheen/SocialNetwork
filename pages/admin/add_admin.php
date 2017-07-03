@@ -28,6 +28,8 @@
 			//check if user already exist
 			$query = "SELECT user_id FROM user WHERE username = ?";
 			
+			echo "$query";
+			
 			$check_user_stmt = mysqli_prepare($connection, $query);
 			mysqli_stmt_bind_param($check_user_stmt, "s", $username);
 			mysqli_stmt_execute($check_user_stmt);
@@ -48,7 +50,7 @@
 				mysqli_stmt_close($add_admin_stmt);
 				
 				
-				if (mysqli_affected_rows($connection) > 0) {
+				if (mysqli_affected_rows($connection)) {
 					$message = "The Admin was successfully added.";
 				} else {
 					$message = "The admin could not be added.";

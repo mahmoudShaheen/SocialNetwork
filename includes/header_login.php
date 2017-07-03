@@ -2,6 +2,7 @@
 	<head>
 		<title>CSE-ZU Social Network</title>
 		<link href="../../stylesheets/public.css" media="all" rel="stylesheet" type="text/css" />
+		<script type="text/javascript" src="../../javascripts/jquery.js"></script>
 	</head>
 	<body>
 		<div id="header">

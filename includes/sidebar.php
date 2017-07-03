@@ -7,42 +7,44 @@
 			                    <img src="../../images/fw.png" width="80" height="80" >
 			                </li>
 
+			                <li>
+			                    <a href="../home/index.php">Home</a>
+			                </li>
+
 			                <li> 	                    
 								<button class="accordion">Courses</button>
 								<div class="panels">
 								  <ul>
-								  	<li><a href="course.html"> Home</a></li>
-								  	<li><a href="fourth.html"> 4<sup>th</sup> Courses</a></li>
-								  	<li><a href="third.html"> 3<sup>rd</sup> Courses</a></li>
+								  	<li><a href="../home/courses.php">All Courses</a></li>
+								  	<!--li><a href="#"> 4<sup>th</sup> Courses</a></li-->
+								  	<!--li><a href="#"> 3<sup>rd</sup> Courses</a></li-->
 								  </ul>
 								</div>
 			                </li>
 			                <li>
-			                    <a href="projects.html">Projects</a>
+			                    <a href="../home/projects.php">Projects</a>
 			                </li>
 			                <li>
 			                   
 			                    <button class="accordion">Labs</button>
 								<div class="panels">
 								  <ul>
-								  	<li><a href="lab.html"> Home</a></li>
-								  	<li><a href="lab1.html">Lab 1</a></li>
-								  	<li><a href="lab2.html">Lab 2</a></li>
-								  	<li><a href="lab3.html"> Lab 3</a></li>
+								  	<li><a href="labs.php">All Labs</a></li>
+								  	<li><a href="../home/components.php">Components</a></li>
 								  </ul>
 								</div>
-			                </li>
-			                <li>
-			                    <a href="#">Events</a>
 			                </li>
 			                <li>
 			                    <a href="#">About</a>
 			                </li>
 			                <li>
-			                    <a href="#">Services</a>
+			                    <a href="#contact">Contact</a>
 			                </li>
 			                <li>
-			                    <a href="#contact">Contact</a>
+			                    <a href="result.php">View Result</a>
+			                </li>
+							<li>
+			                    <a href="chat.php">Chat</a>
 			                </li>
 			            </ul>
 			        </div>

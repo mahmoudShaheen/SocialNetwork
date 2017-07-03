@@ -36,7 +36,7 @@ Directory for putting Basic PHP Functions in.
 
 =====================================================
 
-[images](./images): Front-end Team
+[images](./img): Front-end Team
 
 Directory for putting image assets in.
 

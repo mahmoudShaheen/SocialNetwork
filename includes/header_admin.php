@@ -8,6 +8,7 @@
         <link rel="stylesheet" href="../../stylesheets/font-awesome.min.css" type="text/css">
         <link rel="shortcut icon" href="../../images/bb.gif" type="image/x-icon">
         <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+        		<script type="text/javascript" src="../../javascripts/jquery.js"></script>
 
 	</head>
 	<body>

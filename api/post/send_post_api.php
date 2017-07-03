@@ -2,6 +2,21 @@
 <?php 
 	require_once("../../includes/db_connection.php");
 	global $connection;
+
+	// Eidarous Edit Start
+	//keys: userID, FirstName, MiddleName, LastName, UserName, PasswordHash, 
+	//			PictureURL, about, lastActiveTime, collegeRole
+	function get_user_data($user_id){
+		global $connection;
+		$query = "SELECT * FROM user WHERE user_id = ? ";
+		$get_user_stmt =  mysqli_prepare($connection, $query);
+		mysqli_stmt_bind_param($get_user_stmt, "i", $user_id);
+		mysqli_stmt_execute($get_user_stmt);
+		$result_set = mysqli_stmt_get_result($get_user_stmt);
+		mysqli_stmt_close($get_user_stmt);
+		return $result_set;
+	}
+// Eidarous Edit end
 ?>
 
 <?php 
@@ -20,7 +35,8 @@
 	if (isset($_POST['post'])) {
 		$post = $_POST['post'];
 	}else{
-		echo "[[Empty post!]]";
+		 var_dump($_POST);
+		//echo "[[Empty post!]]";
 		exit;
 	}
 	//get tags
@@ -78,10 +94,21 @@
 			mysqli_stmt_close($post_tag_stmt);
 			mysqli_stmt_close($tag_stmt);
 		}
-		echo "[[Post Added!]]";
+		// Eidarous Edit Start
+		// Get the user who made the post information
+		$post_user = get_user_data($user_id);
+		$post_user_row = mysqli_fetch_assoc($post_user);
+		// prepare date to return
+		$post_data = array('user_id' => $user_id, 'user_profile_image' => $post_user_row['profile_image'], 'user_name' => $post_user_row['username'], 'post' => $post, 'time' => $time );
+		// Json encode post data. 
+		$post_data = json_encode(array('post_data' => $post_data)); //json_encode is a php function that converts the array to JSON
+		echo $post_data;
 		exit;
+		// Eidarous Edit end
 	} else {
 		echo "[[Error adding post!]]";
 		exit;
 	}
+
+
 ?>

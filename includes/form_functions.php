@@ -14,6 +14,19 @@
 		return $field_errors;
 	}
 
+	//check if any required field is empty
+	//returns an array of empty required fields
+	function check_required_subject_fields($required_array) {
+		$field_errors = array();
+		foreach($required_array as $fieldname) {
+			if (!isset($fieldname) || (empty($fieldname))) { 
+				$field_errors[] = $fieldname; 
+			}
+		}
+		return $field_errors;
+	}
+
+
 	//check maximum field length
 	//returns an array of fields exceed the maximum length
 	function check_max_field_lengths($field_length_array) {

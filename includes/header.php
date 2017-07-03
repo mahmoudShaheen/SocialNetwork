@@ -9,6 +9,7 @@
         <link rel="stylesheet" href="../../stylesheets/font-awesome.min.css" type="text/css">
         <link rel="shortcut icon" href="../../images/bb.gif" type="image/x-icon">
         <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+        <script type="text/javascript" src="../../javascripts/jquery.js"></script>
 
 	</head>
 	<body>
@@ -37,7 +38,7 @@
 							</div>
 					    </form>
 				      	<ul class="nav navbar-nav navbar-right list">
-					        <li><a href="#"><img src="../../images/bb.gif" width="20" height="20"><?php
+					        <li><a href="profile.php"><img src="../../images/bb.gif" width="20" height="20"><?php
 								require_once(dirname(__DIR__)."/includes/social_functions.php"); 
 								$user_id = $_SESSION['user_id'];
 									$user = get_user_data($user_id);
